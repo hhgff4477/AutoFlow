@@ -1,0 +1,1230 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-page-node-id="IAZCpKECXsMRd8TNCq6qoT"><head data-page-node-id="zx0zJ6hGlDxA7WBeTFL83k">
+<meta charset="UTF-8" data-page-node-id="JBbayZFV1KhuqHQM0rvhIk">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" data-page-node-id="0kNPur0GWS4TPoeeVd5yvf">
+<title>黄鑫浩 · AI运营 / AI岗位 — 个人作品集</title>
+<meta name="description" content="黄鑫浩的个人作品集：从游戏MOD到AI智能体，发现问题、找到工具、跑通它，把重复的事情变快变好。求职方向：AI运营及AI相关岗位。“ data-page-node-id=”FOpiUI85ok7UCELChQjmVg">
+<style>
+  :root{
+    --bg:#F6F3ED;
+    --paper:#FCFAF6;
+    --card-alt:#EFEBE2;
+    --ink:#1C1A17;
+    --ink-soft:#5B564C;
+    --line:#DAD4C8;
+    --accent:#D9481F;
+    --accent-soft:#F4DCD2;
+    --dark:#211E19;
+    --dark-ink:#F1EDE4;
+    --mono:"JetBrains Mono","Cascadia Mono",Consolas,"Courier New",monospace;
+    --sans:-apple-system,"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei","Source Han Sans SC",sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:var(--sans);
+    background:var(--bg);
+    color:var(--ink);
+    line-height:1.75;
+    font-size:16px;
+    -webkit-font-smoothing:antialiased;
+  }
+  img{display:block;max-width:100%;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--accent);color:#fff;}
+
+  .wrap{max-width:1180px;margin:0 auto;padding:0 28px;}
+  .mono{font-family:var(--mono);}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:100;
+    background:rgba(246,243,237,.96);
+    border-bottom:1px solid var(--line);
+    transition:box-shadow .25s;
+  }
+  nav.scrolled{box-shadow:0 2px 14px rgba(28,26,23,.08);}
+  .nav-inner{
+    max-width:1180px;margin:0 auto;padding:14px 28px;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+  }
+  .nav-logo{display:flex;align-items:baseline;gap:10px;font-weight:800;font-size:17px;letter-spacing:.02em;}
+  .nav-logo .mono{font-size:11px;color:var(--accent);letter-spacing:.12em;}
+  .nav-links{display:flex;align-items:center;gap:26px;font-size:14px;color:var(--ink-soft);}
+  .nav-links a{position:relative;padding:4px 0;}
+  .nav-links a:hover{color:var(--ink);}
+  .nav-links a::after{
+    content:"";position:absolute;left:0;bottom:0;width:0;height:2px;background:var(--accent);transition:width .2s;
+  }
+  .nav-links a:hover::after{width:100%;}
+  .nav-cta{
+    background:var(--ink);color:var(--bg)!important;padding:8px 18px;border-radius:4px;
+    font-weight:600;font-size:13px;
+  }
+  .nav-cta:hover{background:var(--accent);}
+  .nav-cta::after{display:none;}
+  @media(max-width:760px){
+    .nav-links{gap:14px;font-size:12.5px;}
+    .nav-links a:not(.nav-cta){display:none;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:158px 0 84px;
+    background:
+      linear-gradient(var(--bg), var(--bg)) padding-box,
+      repeating-linear-gradient(0deg, transparent, transparent 47px, rgba(28,26,23,.045) 47px, rgba(28,26,23,.045) 48px);
+  }
+  .hero-grid{display:grid;grid-template-columns:1.25fr .75fr;gap:56px;align-items:center;}
+  .hero-eyebrow{
+    font-family:var(--mono);font-size:12.5px;letter-spacing:.18em;color:var(--accent);
+    display:flex;align-items:center;gap:12px;margin-bottom:26px;font-weight:600;
+  }
+  .hero-eyebrow::before{content:"";width:34px;height:2px;background:var(--accent);}
+  .hero-name{
+    font-size:clamp(52px,7.5vw,92px);font-weight:900;line-height:1.08;letter-spacing:.01em;
+  }
+  .hero-name em{font-style:normal;color:var(--accent);}
+  .hero-role{
+    font-size:clamp(17px,2vw,21px);color:var(--ink-soft);margin-top:10px;font-weight:500;
+  }
+  .hero-statement{
+    margin-top:30px;font-size:17.5px;max-width:560px;color:var(--ink);
+    border-left:3px solid var(--accent);padding-left:20px;
+  }
+  .hero-statement strong{color:var(--accent);}
+  .hero-sub{margin-top:22px;font-size:14px;color:var(--ink-soft);}
+  .hero-cta{margin-top:38px;display:flex;gap:14px;flex-wrap:wrap;}
+  .btn{
+    display:inline-block;padding:13px 30px;border-radius:4px;font-weight:700;font-size:15px;
+    transition:transform .15s, background .2s, color .2s;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{background:var(--accent);color:#fff;}
+  .btn-primary:hover{background:#B93A16;}
+  .btn-ghost{border:1.5px solid var(--ink);color:var(--ink);}
+  .btn-ghost:hover{background:var(--ink);color:var(--bg);}
+
+  .hero-photo{position:relative;justify-self:center;}
+  .hero-photo .frame{
+    width:min(330px,80vw);padding:12px;background:var(--paper);
+    border:1px solid var(--line);border-radius:4px;
+    box-shadow:14px 14px 0 var(--accent-soft), 14px 14px 0 1px var(--line);
+    transform:rotate(1.2deg);
+  }
+  .hero-photo img{border-radius:2px;aspect-ratio:3/4;object-fit:cover;width:100%;}
+  .hero-chip{
+    position:absolute;background:var(--ink);color:var(--dark-ink);
+    font-family:var(--mono);font-size:11.5px;padding:9px 14px;border-radius:3px;
+    box-shadow:0 4px 14px rgba(28,26,23,.25);white-space:nowrap;
+  }
+  .chip-1{top:-16px;left:-34px;transform:rotate(-3deg);}
+  .chip-1 b,.chip-2 b{color:#F2A488;}
+  .chip-2{bottom:-14px;right:-26px;transform:rotate(2deg);}
+  @media(max-width:900px){
+    .hero{padding:130px 0 60px;}
+    .hero-grid{grid-template-columns:1fr;gap:60px;}
+    .hero-photo{justify-self:start;}
+  }
+
+  /* ---------- METRICS ---------- */
+  .metrics{background:var(--dark);color:var(--dark-ink);padding:52px 0;}
+  .metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:28px;}
+  .metric .num{font-family:var(--mono);font-size:clamp(30px,3.6vw,46px);font-weight:700;color:#F2A488;line-height:1.1;}
+  .metric .num small{font-size:.5em;font-weight:400;color:rgba(241,237,228,.65);margin-left:4px;}
+  .metric .lab{margin-top:8px;font-size:13.5px;color:rgba(241,237,228,.72);}
+  @media(max-width:760px){.metrics-grid{grid-template-columns:repeat(2,1fr);gap:34px 20px;}}
+
+  /* ---------- SECTION HEADER ---------- */
+  section{padding:96px 0;}
+  .sec-head{margin-bottom:56px;}
+  .sec-tag{font-family:var(--mono);font-size:12.5px;letter-spacing:.2em;color:var(--accent);font-weight:600;}
+  .sec-title{font-size:clamp(30px,4vw,44px);font-weight:900;margin-top:12px;letter-spacing:.01em;}
+  .sec-desc{margin-top:14px;color:var(--ink-soft);max-width:640px;font-size:15.5px;}
+
+  /* ---------- WORK GRID ---------- */
+  .work-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:26px;}
+  .pcard{
+    background:var(--paper);border:1px solid var(--line);border-radius:6px;overflow:hidden;
+    display:flex;flex-direction:column;transition:transform .2s, box-shadow .2s;
+  }
+  .pcard:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(28,26,23,.10);}
+  .span7{grid-column:span 7;} .span5{grid-column:span 5;} .span12{grid-column:span 12;}
+  @media(max-width:860px){.span7,.span5,.span12{grid-column:span 12;}}
+  .pcard .cover{position:relative;overflow:hidden;border-bottom:1px solid var(--line);background:var(--card-alt);}
+  .pcard .cover img{width:100%;height:100%;object-fit:cover;aspect-ratio:16/9.5;transition:transform .35s;}
+  .pcard:hover .cover img{transform:scale(1.025);}
+  .pnum{
+    position:absolute;top:14px;left:14px;background:var(--ink);color:var(--dark-ink);
+    font-family:var(--mono);font-size:12px;padding:5px 11px;border-radius:3px;letter-spacing:.08em;
+  }
+  .pcard .body{padding:26px 26px 20px;display:flex;flex-direction:column;flex:1;}
+  .pmeta{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);letter-spacing:.06em;display:flex;gap:14px;flex-wrap:wrap;}
+  .pmeta b{color:var(--accent);font-weight:600;}
+  .pcard h3{font-size:21px;font-weight:800;margin:10px 0 8px;letter-spacing:.01em;}
+  .pcard .desc{font-size:14.5px;color:var(--ink-soft);}
+  .pcard details{margin-top:16px;border-top:1px dashed var(--line);padding-top:14px;}
+  .pcard summary{
+    cursor:pointer;list-style:none;font-weight:700;font-size:14px;color:var(--accent);
+    display:flex;align-items:center;gap:8px;user-select:none;
+  }
+  .pcard summary::-webkit-details-marker{display:none;}
+  .pcard summary::before{content:"+";font-family:var(--mono);font-size:16px;width:20px;height:20px;border:1.5px solid var(--accent);border-radius:3px;display:inline-flex;align-items:center;justify-content:center;flex:none;}
+  .pcard details[open] summary::before{content:"−";}
+  .pdetail{padding-top:16px;font-size:14px;}
+  .pdetail h4{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--ink-soft);
+    margin:18px 0 6px;font-weight:600;
+  }
+  .pdetail h4:first-child{margin-top:0;}
+  .pdetail ul{padding-left:18px;color:var(--ink);}
+  .pdetail li{margin-bottom:6px;}
+  .pdetail .stat-row{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0 4px;}
+  .pdetail .stat{
+    background:var(--card-alt);border:1px solid var(--line);border-radius:4px;
+    padding:8px 14px;font-size:13px;
+  }
+  .pdetail .stat b{font-family:var(--mono);color:var(--accent);}
+  .evi-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:10px;}
+  .evi-grid.cols-3{grid-template-columns:repeat(3,1fr);}
+  .evi-grid img{width:100%;aspect-ratio:4/3;object-fit:cover;border-radius:4px;border:1px solid var(--line);}
+  .evi-cap{font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);margin-top:6px;letter-spacing:.05em;}
+  .quote{
+    border-left:3px solid var(--accent);background:var(--card-alt);
+    padding:12px 16px;border-radius:0 4px 4px 0;margin-top:14px;font-size:13.5px;color:var(--ink);
+  }
+  .quote b{color:var(--accent);}
+  /* ---- 抖音数据复盘 ---- */
+  .kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 4px;}
+  .kpi{background:var(--card-alt);border:1px solid var(--line);border-radius:4px;padding:10px 12px;text-align:center;}
+  .kpi .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--ink-soft);display:block;margin-bottom:4px;}
+  .kpi .v{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--accent);line-height:1.1;}
+  .kpi .n{font-size:11px;color:var(--ink-soft);display:block;margin-top:3px;}
+  .kpi.warn .v{color:#B45309;}
+  .cmptbl{width:100%;border-collapse:collapse;margin:10px 0 4px;font-size:12.5px;}
+  .cmptbl th,.cmptbl td{border:1px solid var(--line);padding:7px 9px;text-align:left;vertical-align:top;}
+  .cmptbl th{background:var(--card-alt);font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;color:var(--ink-soft);font-weight:600;}
+  .cmptbl td.hi{background:rgba(217,72,31,.07);font-weight:600;color:var(--accent);}
+  .cmptbl .num{font-family:var(--mono);}
+  .stepline{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:10px 0 4px;font-size:12px;}
+  .stepline .s{background:var(--card-alt);border:1px solid var(--line);border-radius:3px;padding:5px 10px;font-family:var(--mono);font-size:11px;}
+  .stepline .ar{color:var(--accent);font-weight:700;}
+  .caveat{font-size:12px;color:var(--ink-soft);border-left:2px solid var(--line);padding-left:10px;margin-top:10px;line-height:1.6;}
+  .p05 .kpi,.p05 .cmptbl th{background:rgba(241,237,228,.08);border-color:rgba(241,237,228,.2);}
+  .p05 .cmptbl th{color:rgba(241,237,228,.6);}
+  .p05 .cmptbl td{border-color:rgba(241,237,228,.2);}
+  .p05 .kpi .v{color:#F2A488;}
+
+  /* P05 typographic project */
+  .pcard.p05{background:var(--dark);color:var(--dark-ink);border-color:var(--dark);}
+  .p05 .body{padding:40px 40px 34px;}
+  .p05 .pmeta{color:rgba(241,237,228,.6);}
+  .p05 .desc{color:rgba(241,237,228,.75);}
+  .p05 h3{font-size:clamp(24px,3vw,34px);font-weight:900;}
+  .p05 h3 em{font-style:normal;color:#F2A488;}
+  .p05 details{border-top-color:rgba(241,237,228,.25);}
+  .p05 summary{color:#F2A488;}
+  .p05 summary::before{border-color:#F2A488;}
+  .p05 .pdetail h4{color:rgba(241,237,228,.6);}
+  .p05 .stat{background:rgba(241,237,228,.08);border-color:rgba(241,237,228,.2);}
+  .p05 .stat b{color:#F2A488;}
+  .p05 .quote{background:rgba(241,237,228,.08);color:rgba(241,237,228,.9);}
+  .p05 .big-num{
+    font-family:var(--mono);font-size:clamp(46px,6vw,74px);font-weight:700;color:#F2A488;line-height:1;
+  }
+  .p05 .big-num small{font-size:.32em;color:rgba(241,237,228,.6);font-weight:400;}
+  .demo-link{
+    margin-top:16px;font-family:var(--mono);font-size:13.5px;letter-spacing:.02em;
+    display:flex;flex-wrap:wrap;align-items:baseline;gap:8px;
+  }
+  .demo-link a{
+    color:#F2A488;text-decoration:none;font-weight:700;
+    border-bottom:1px solid rgba(242,164,136,.5);padding-bottom:1px;
+  }
+  .demo-link a:hover{border-bottom-color:#F2A488;}
+  .demo-link .demo-note{color:rgba(241,237,228,.55);font-size:12px;}
+
+  /* ---------- EXPERIENCE ---------- */
+  .exp-note{
+    font-size:16px;border:1px solid var(--line);background:var(--paper);border-radius:6px;
+    padding:22px 26px;margin-bottom:48px;
+  }
+  .exp-note b{color:var(--accent);}
+  .timeline{position:relative;padding-left:34px;}
+  .timeline::before{content:"";position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--line);}
+  .titem{position:relative;padding-bottom:44px;}
+  .titem:last-child{padding-bottom:0;}
+  .titem::before{
+    content:"";position:absolute;left:-31px;top:9px;width:12px;height:12px;border-radius:50%;
+    background:var(--bg);border:3px solid var(--accent);
+  }
+  .titem .tmeta{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.06em;font-weight:600;}
+  .titem h3{font-size:19px;font-weight:800;margin:6px 0 8px;}
+  .titem h3 span{font-weight:500;color:var(--ink-soft);font-size:15px;margin-left:10px;}
+  .titem ul{padding-left:18px;font-size:14.5px;color:var(--ink-soft);}
+  .titem ul b{color:var(--ink);}
+  .titem .tags{margin-top:10px;display:flex;flex-wrap:wrap;gap:8px;}
+  .tag{
+    font-family:var(--mono);font-size:11px;border:1px solid var(--line);background:var(--paper);
+    padding:4px 10px;border-radius:3px;color:var(--ink-soft);letter-spacing:.04em;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .about-grid{display:grid;grid-template-columns:.9fr 1.4fr;gap:56px;align-items:start;}
+  @media(max-width:900px){.about-grid{grid-template-columns:1fr;}}
+  .about-photo{position:sticky;top:96px;}
+  .about-photo .frame{
+    padding:12px;background:var(--bg);border:1px solid var(--line);border-radius:4px;
+    box-shadow:-12px 12px 0 var(--accent-soft), -12px 12px 0 1px var(--line);
+    transform:rotate(-1.2deg);max-width:340px;
+  }
+  .about-photo img{border-radius:2px;aspect-ratio:4/5;object-fit:cover;width:100%;}
+  .about-photo .cap{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);margin-top:14px;letter-spacing:.06em;}
+  .act{margin-bottom:34px;}
+  .act .act-no{font-family:var(--mono);font-size:12px;color:var(--accent);letter-spacing:.16em;font-weight:600;}
+  .act h3{font-size:20px;font-weight:800;margin:6px 0;}
+  .act p{font-size:14.5px;color:var(--ink-soft);}
+  .act p b{color:var(--ink);}
+  .about-quote{
+    font-size:clamp(19px,2.4vw,24px);font-weight:700;line-height:1.6;margin:36px 0;
+    padding-left:22px;border-left:4px solid var(--accent);
+  }
+  .trait-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:44px 0;}
+  @media(max-width:760px){.trait-grid{grid-template-columns:1fr;}}
+  .trait{
+    border:1px solid var(--line);border-radius:6px;padding:22px;background:var(--bg);
+  }
+  .trait .t-ico{font-size:22px;}
+  .trait h4{font-size:15.5px;font-weight:800;margin:10px 0 6px;}
+  .trait p{font-size:13px;color:var(--ink-soft);}
+  .trait p b{font-family:var(--mono);color:var(--accent);font-weight:700;}
+  .skill-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;}
+  @media(max-width:760px){.skill-grid{grid-template-columns:1fr;}}
+  .skill-col{border:1px solid var(--line);border-radius:6px;padding:22px 24px;background:var(--bg);}
+  .skill-col h4{
+    font-family:var(--mono);font-size:12px;letter-spacing:.16em;color:var(--accent);
+    margin-bottom:14px;font-weight:700;
+  }
+  .skill-col ul{list-style:none;}
+  .skill-col li{
+    font-size:14px;padding:7px 0;border-bottom:1px dashed var(--line);display:flex;justify-content:space-between;gap:12px;
+  }
+  .skill-col li:last-child{border-bottom:none;}
+  .skill-col li span{color:var(--ink-soft);font-size:12.5px;text-align:right;}
+
+  /* ---------- CONTACT ---------- */
+  .contact{background:var(--dark);color:var(--dark-ink);}
+  .contact .sec-tag{color:#F2A488;}
+  .contact-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:56px;align-items:start;}
+  @media(max-width:860px){.contact-grid{grid-template-columns:1fr;}}
+  .contact-lines{margin-top:34px;display:grid;gap:0;}
+  .cline{
+    display:flex;align-items:baseline;gap:20px;padding:16px 0;
+    border-bottom:1px solid rgba(241,237,228,.14);flex-wrap:wrap;
+  }
+  .cline .k{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;color:rgba(241,237,228,.55);width:84px;flex:none;}
+  .cline .v{font-size:16.5px;font-weight:600;}
+  .cline .v small{font-weight:400;color:rgba(241,237,228,.55);font-size:13px;margin-left:10px;}
+  .contact-side{
+    border:1px solid rgba(241,237,228,.2);border-radius:6px;padding:28px;
+    background:rgba(241,237,228,.05);
+  }
+  .contact-side h4{font-size:16px;font-weight:800;margin-bottom:12px;color:#F2A488;}
+  .contact-side p{font-size:13.5px;color:rgba(241,237,228,.78);}
+  .contact-side p+p{margin-top:10px;}
+
+  /* ---------- MESSAGE BOARD ---------- */
+  .board{
+    border:1px solid var(--line);border-radius:6px;background:var(--bg);
+    padding:26px 28px;margin-top:22px;
+  }
+  .board-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;}
+  .board-head h4{font-size:16px;font-weight:800;}
+  .board-head .board-note{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);letter-spacing:.06em;}
+  .board-form{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px;}
+  @media(max-width:640px){.board-form{grid-template-columns:1fr;}}
+  .board-form .full{grid-column:1/-1;}
+  .board-form label{
+    display:block;font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;
+    color:var(--ink-soft);margin-bottom:6px;font-weight:600;
+  }
+  .board-form input,.board-form textarea,.board-form select{
+    width:100%;font-family:inherit;font-size:14px;color:var(--ink);
+    background:#fff;border:1px solid var(--line);border-radius:4px;padding:10px 12px;
+    transition:border-color .18s,box-shadow .18s;
+  }
+  .board-form input:focus,.board-form textarea:focus,.board-form select:focus{
+    outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(176,58,46,.10);
+  }
+  .board-form textarea{resize:vertical;min-height:88px;}
+  .board-actions{grid-column:1/-1;display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  .board-actions .btn[disabled]{opacity:.55;cursor:not-allowed;}
+  .board-msg{font-size:13px;color:var(--ink-soft);min-height:18px;}
+  .board-msg.err{color:var(--accent);}
+  .board-id{
+    grid-column:1/-1;font-size:12.5px;color:var(--ink-soft);
+    border-top:1px dashed var(--line);padding-top:12px;margin-top:4px;
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap;
+  }
+  .board-list{margin-top:26px;border-top:1px solid var(--line);padding-top:20px;}
+  .board-list h5{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--accent);
+    margin-bottom:14px;font-weight:700;
+  }
+  .msg-item{
+    border-left:3px solid var(--accent);padding:10px 0 10px 16px;margin-bottom:14px;
+    background:linear-gradient(90deg,rgba(176,58,46,.045),transparent 60%);
+  }
+  .msg-item .msg-meta{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;}
+  .msg-item .msg-name{font-weight:800;font-size:14.5px;}
+  .msg-item .msg-role{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--accent);
+    border:1px solid rgba(176,58,46,.3);border-radius:99px;padding:1px 8px;
+  }
+  .msg-item .msg-time{font-family:var(--mono);font-size:11px;color:var(--ink-soft);margin-left:auto;}
+  .msg-item .msg-body{font-size:14px;color:var(--ink-soft);margin-top:6px;white-space:pre-wrap;word-break:break-word;}
+  .msg-item .msg-del{
+    background:none;border:none;font-family:var(--mono);font-size:11px;color:var(--ink-soft);
+    cursor:pointer;text-decoration:underline;padding:0;margin-top:6px;
+  }
+  .msg-item .msg-del:hover{color:var(--accent);}
+  .board-empty{font-size:13.5px;color:var(--ink-soft);font-style:italic;}
+  .board-loading{font-size:13.5px;color:var(--ink-soft);}
+
+  footer{background:var(--dark);color:rgba(241,237,228,.45);padding:26px 0;border-top:1px solid rgba(241,237,228,.12);}
+  .foot-inner{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12.5px;}
+  .foot-inner .mono{font-size:11.5px;letter-spacing:.06em;}
+
+  /* reveal animation */
+  .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+<style id="__dm_no_drag_style__">* { -webkit-user-drag: none !important; }</style><style id="__dm_bindable_badge_style__">[data-sp-bindable="database"]{outline:1px dashed #0088ff;outline-offset:2px;border-radius:4px;}[data-sp-bindable="database"] *{pointer-events:none !important;transition:none !important;animation:none !important;}[data-sp-bindable="database"]{transition:none !important;animation:none !important;}</style></head>
+<body data-page-node-id="uH0oo50otklAuT80Ai1rUb" style="position: relative;">
+
+<nav id="nav" data-page-node-id="YTu5SH0zrBi00yyx1dExFm" class="scrolled">
+  <div class="nav-inner" data-page-node-id="hIgUBpEvb03bPMeG24mx2G">
+    <a class="nav-logo" href="#top" data-page-node-id="jQHqTvu3Ecap0l5gxa6XuY">黄鑫浩 <span class="mono" data-page-node-id="TqYuo8DIgq7DaaZamZfiJO">AI × OPS</span></a>
+    <div class="nav-links" data-page-node-id="8YbHznUmwBLAkCx8xn7lid">
+      <a href="#work" data-page-node-id="lHkL51SlKUv1WN6HxHFzdl">精选项目</a>
+      <a href="#experience" data-page-node-id="bXXPvCBQL6ePHGymfkxRfd">运营经历</a>
+      <a href="#about" data-page-node-id="pdoNbYqRbCr79B8PfHJM3t">关于我</a>
+      <a href="#contact" class="nav-cta" data-page-node-id="vmFiLTt9Apkg49xyXPqLWD">联系我</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top" data-page-node-id="jBVO9vA6UE7AwRlxU6GQjk">
+  <div class="wrap hero-grid" data-page-node-id="xmUrMCWowi9iD1tMABDCMr">
+    <div data-page-node-id="3EbXhiFaC5BmSfFarlMrOs">
+      
+      <div class="hero-eyebrow" data-page-node-id="eF7q8Ubznh4N0JDkB5DBRj" style="white-space: pre-wrap;">求职方向：AI 运营 内容运营 产品运营  — 2027届 · 求职中​</div><h1 class="hero-name" data-page-node-id="CAcNCXA41pyaJBcX56FBQ8">黄鑫浩<br data-page-node-id="BWwggaZrFktDNqhErHlx2S"><em data-page-node-id="8CgYG6yMbd4jqxhEDC77id">把重复的事</em>交给工具</h1>
+      <div class="hero-role" data-page-node-id="wxiwSHRE3EkOi4vjs2kwid">AI运营 · 内容运营 · 用户运营</div>
+      <p class="hero-statement" data-page-node-id="j3ERhN6L9U3VIgKDLgdVpj">
+        从小学折腾游戏MOD，到大学跑通AI智能体——<strong data-page-node-id="vyXHBj72232aQd0QFIaH40">十几年里我一直在做同一件事</strong>：
+        发现问题、找到工具、自己跑通它，把重复的事情变快变好。
+        现在，AI是我手里最大的杠杆。
+      </p>
+      <p class="hero-sub" data-page-node-id="nZhE7gD08tFUBa2gwOXZjj">河南财政金融学院 · 工程造价（2027届）｜ 中原银行 / 胖东来 / 立讯精密 三段运营与一线实习</p>
+      <div class="hero-cta" data-page-node-id="Gvddv1G9GQsd47uR0OoR2C">
+        <a class="btn btn-primary" href="#work" data-page-node-id="1t7BqYvC6kFiZ6A5WVLWq4">查看精选项目</a>
+        <a class="btn btn-ghost" href="#about" data-page-node-id="XpjtDQFXvevYRC3RG9pV8d">我是谁</a>
+      </div>
+    </div>
+    <div class="hero-photo" data-page-node-id="ApBnBfNJJiDBqkGkKhoR4R">
+      <div class="frame" data-page-node-id="aBPpGdhxg4E5FEocJ2TGsF"><img src="assets/portrait.jpg" alt="黄鑫浩证件照" data-page-node-id="HHC6FVt6LsWtAdWowCD0AF"></div>
+      <div class="hero-chip chip-1" data-page-node-id="Y72GoCulSmMM1UIVpKm7FQ">永劫无间 国服高校榜 <b data-page-node-id="4Qsfuy2UQWJCqgj6BrymnW">#80</b></div>
+      <div class="hero-chip chip-2" data-page-node-id="1E7nbNnDXHxwAzpeJL0V89">夜跑 5km <b data-page-node-id="HNGwixGGYzACA4cG4GllQM">× 2年不间断</b></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ METRICS ============ -->
+<div class="metrics" data-page-node-id="X1fxXxch4qX8uftaErk9tY">
+  <div class="wrap metrics-grid" data-page-node-id="QlWxuIjG4YFYbl1gpRJAKJ">
+    <div class="metric reveal in" data-page-node-id="SvH5xX5kCEgT2iuIzPjIQi"><div class="num" data-page-node-id="V3EC0qXvVQ5NAC3CPPAy5I">7.8<small data-page-node-id="Mghnk0mT1zaEcMtz3OoA0T">万</small></div><div class="lab" data-page-node-id="WOIYf93EF9y9xbbWEVoa5A">抖音单条最高播放（游戏内容账号）</div></div>
+    <div class="metric reveal in" data-page-node-id="kVa1eAUjTbsv7Ulhi89qQO"><div class="num" data-page-node-id="md8JHUJYnA1yjyhigQNnFg">4<small data-page-node-id="jKDy4bnknFvT2cG64uFpcq">条</small></div><div class="lab" data-page-node-id="SunMbILb3S3sIzBi4xBH5i">播放量破万的视频作品</div></div>
+    <div class="metric reveal in" data-page-node-id="vsLdACja9K6EboDsT3v9vG"><div class="num" data-page-node-id="9HsXVAG5p6WBcCiHuulkdr">40<small data-page-node-id="xxhmO6tWZhRsgmwld0r18k">%</small></div><div class="lab" data-page-node-id="00JJknpx3TKo2jN4RrZ11w">参与推动智能机具替代率提升（中原银行）</div></div>
+    <div class="metric reveal in" data-page-node-id="Y94rHYa6GTMEN3PBH21Wnt"><div class="num" data-page-node-id="WdbeWCKIIf5PM4UKoJS5RW">780<small data-page-node-id="ZgYsTzsO2cMwmOP8hgmWu3">万</small></div><div class="lab" data-page-node-id="2t8R3Ky9vYzyzO8xgUvRA9">独立负责的招投标预算项目</div></div>
+  </div>
+</div>
+
+<!-- ============ SELECTED WORK ============ -->
+<section id="work" data-page-node-id="WIcFEjduuQNKIQyRhiwqwY">
+  <div class="wrap" data-page-node-id="NMERX8o8SCcPM43ClQpRs0">
+    <div class="sec-head reveal in" data-page-node-id="JDg15TrnVh7lN8ZwYeaI7S">
+      <div class="sec-tag" data-page-node-id="8ELZV2IulAl5GEX7LdEiYZ">01 — SELECTED WORK</div>
+      <h2 class="sec-title" data-page-node-id="EnfzyChd1sq5uaunvQaFUe">精选项目</h2>
+      <p class="sec-desc" data-page-node-id="ijslao8v6iGhtCbrvoFiJR">五个项目，一条主线：用工具（尤其是AI）把重复的劳动变得更快、更稳。点击卡片可展开完整过程与证据；下面还有一个我自己从零搭建的系统。</p>
+    </div>
+
+    <div class="work-grid" data-page-node-id="RLSV7FzBdWWyizPP1dmrUg">
+
+      <!-- P01 -->
+      <article class="pcard span7 reveal in" data-page-node-id="w5lgO6i6MvDRiYxqwBOYQd">
+        <div class="cover" data-page-node-id="rioYz3zT4shHAMaEH8RBwp"><span class="pnum" data-page-node-id="xP3lDWPdOpmAhTPdyScKjt">NO.01</span><img src="assets/dy-grid.jpg" alt="抖音账号万钧的视频数据合集：四条万播视频" data-page-node-id="dhiCUujPJBpRNcMu8qWFgA"></div>
+        <div class="body" data-page-node-id="FP9mXrJGeDd77Px23DnIVn">
+          <div class="pmeta" data-page-node-id="Fz5LbdMnIDPcEOATvZLDj8"><b data-page-node-id="s8Biju4qEmbFxs1TOEOSzb">内容运营</b><span data-page-node-id="5lqFnjY75YyNFt099pHdzL">抖音 · 万钧（45012739858）</span><span data-page-node-id="nzFPPcx2O3Vmou29KjPmfg">2024 — 至今</span></div>
+          <h3 data-page-node-id="5FNYY0Mfyt2TZglRQ830Zs">抖音游戏内容账号「万钧」</h3>
+          <p class="desc" data-page-node-id="LTOAwNL6wVcKVmCnjF599F">独立完成永劫无间内容的选题、制作与运营。从后台数据反推问题、改开头结构与 BGM，做出 4 条播放量破万、单条最高 7.8 万的成绩。</p>
+          <details data-page-node-id="yLzGK4BwBroNduZa0SOd6q">
+            <summary data-page-node-id="sD745nCH3Swe3rQp2OMVEm">展开完整过程</summary>
+            <div class="pdetail" data-page-node-id="NxgKYRGBnHfnWI8pGteHAt">
+              <h4 data-page-node-id="ptm7R4MRh0yEEE2F87ZEPB">CONTEXT — 背景</h4>
+              <p data-page-node-id="VNqJLjqnFmBdSO3EFFYCRj">围绕永劫无间玩家社区持续产出内容，重点跟进藏宝阁外观交易、版本活动等热点节点。发了一段时间后，播放量忽高忽低——有的能破万，有的发出去就没动静。我想搞清楚<b>到底是什么决定了播放量</b>，而不是靠感觉继续发。</p>
+
+              <h4 data-page-node-id="nt01aB">STEP 1｜先看后台数据，不猜</h4>
+              <p data-page-node-id="nt01p1">抖音创作者后台给了三类能反映"内容留不留得住人"的指标。拉出来看，问题很明显：<b>完播率不低，但 2 秒跳出率偏高</b>——说明大量观众是在最开头几秒就走了，人根本没被留住。</p>
+              <div class="kpi-row" data-page-node-id="nt01k">
+                <div class="kpi" data-page-node-id="nt01k1"><span class="k">完播率</span><span class="v">70%</span><span class="n">看完整条的比例</span></div>
+                <div class="kpi" data-page-node-id="nt01k2"><span class="k">人均播放时长</span><span class="v">15s</span><span class="n">平均停留时长</span></div>
+                <div class="kpi warn" data-page-node-id="nt01k3"><span class="k">2秒跳出率</span><span class="v">41.3%</span><span class="n">开头 2 秒就划走</span></div>
+              </div>
+              <p class="caveat" data-page-node-id="nt01c1">这三个数是后台给的整体口径。有意思的是它并不"差"——70% 完播其实不算低。所以单看一个数字看不出问题，<b>必须把"破万"和"没破万"的视频摆在一起对比</b>，看哪个指标的差距最大。</p>
+
+              <h4 data-page-node-id="nt02h">STEP 2｜对比破万 vs 没破万，差异最大的指标</h4>
+              <p data-page-node-id="nt02p">把两类视频的同口径指标并排放，差距一下子就集中到了一处：<b>播放量高的那批，开头 2 秒的留存明显更好</b>；而没破万的，几乎都栽在开头——2 秒跳出率高、人均时长被拖短，后面内容再好也没机会被看到。</p>
+              <table class="cmptbl" data-page-node-id="nt02t">
+                <thead><tr>
+                  <th>指标</th>
+                  <th>破万的视频（4 条）</th>
+                  <th>没破万的视频</th>
+                  <th>差距</th>
+                </tr></thead>
+                <tbody>
+                  <tr><td><b>开头 2 秒留存</b></td><td class="hi num">高 · 前 3 秒即抛悬念</td><td class="num">低 · 平铺直叙开场</td><td class="hi">差异最大 ✓</td></tr>
+                  <tr><td>完播率</td><td class="num">70% 左右</td><td class="num">略低</td><td class="num">差距小</td></tr>
+                  <tr><td>人均播放时长</td><td class="num">约 15 秒</td><td class="num">更短</td><td class="num">差距中等（受开头拖累）</td></tr>
+                </tbody>
+              </table>
+              <p class="caveat" data-page-node-id="nt02c"><b>结论：决定播放量的不是"内容好不好"，而是"前 3 秒有没有钩子"。</b>完播率两者差距并不大，说明内容本身的质量是稳定的；播放量的分化几乎全部发生在开头那一下——这正好和 41.3% 的 2 秒跳出率对上。下面的调整就只针对这一个变量，不做无关的折腾。</p>
+
+              <h4 data-page-node-id="nt03h">STEP 3｜据此调整了什么</h4>
+              <ul data-page-node-id="nt03u">
+                <li data-page-node-id="nt03u1"><b data-page-node-id="nt03u1b">改开头结构：</b>把最有冲突、最反常识的信息（比如"外观被买走了"这类事件结果）直接提到<b>第 1 秒</b>，先抛悬念再讲来龙去脉——不再用铺垫式的"大家好今天聊一下…"开场；</li>
+                <li data-page-node-id="nt03u2"><b data-page-node-id="nt03u2b">换 BGM：</b>开头几秒换成节奏更紧、情绪更强的音轨，用声音把观众"按"在画面里，配合画面在前 2 秒制造停顿感；</li>
+                <li data-page-node-id="nt03u3"><b data-page-node-id="nt03u3b">一次只改一个变量：</b>选题、标签、发布时机保持不动，<b>单独验证"开头"这一个假设</b>——否则数据变好也不知道是谁的功劳。</li>
+              </ul>
+
+              <h4 data-page-node-id="nt04h">STEP 4｜调整后的结果</h4>
+              <div class="stepline" data-page-node-id="nt04s">
+                <span class="s">看到 2 秒跳出率 41.3%</span><span class="ar">→</span>
+                <span class="s">改开头前 3 秒 + BGM</span><span class="ar">→</span>
+                <span class="s">4 条破万 / 最高 7.8 万</span>
+              </div>
+              <p data-page-node-id="nt04p">调整开头结构与 BGM 之后发的那批内容，<b>4 条播放量破万</b>，其中藏宝阁交易那条做到 <b>7.8 万播放</b>——并且拿到了 <b>106 赞 / 91 评论 / 9 分享</b>，评论量接近点赞量，说明内容真的被讨论，而不只是被划过去。</p>
+
+              <h4 data-page-node-id="qCFFgs71PYe0ROgk5yv19F">OUTCOME — 结果</h4>
+              <div class="stat-row" data-page-node-id="QjboHBLq2jzS0enC0YcK2H">
+                <span class="stat" data-page-node-id="OwsqSK72HeFlN8dB0z47o7"><b data-page-node-id="RiHoR7wW3jOCsseM7rqhGB">78,000+</b> 单条最高播放</span>
+                <span class="stat" data-page-node-id="LffBXRMrhOEZnvTZorCtJ3"><b data-page-node-id="RIDgqWH74RdjmmrZQ1gMpF">106 / 91</b> 点赞 / 评论</span>
+                <span class="stat" data-page-node-id="mf27VrbFB0E2rACkH6D25X"><b data-page-node-id="Ng5lvmY9ELCtnxMGVlmDtJ">4 条</b> 播放破万</span>
+                <span class="stat" data-page-node-id="mI5ijL48yY5IQUs3k9hIDr"><b data-page-node-id="4At5RbHJ49nQY8VoIY98Y6">70%</b> 完播率</span>
+              </div>
+
+              <h4 data-page-node-id="2M4b1hPAmkPrxHzxiOT97S">EVIDENCE — 证据</h4>
+              <div class="evi-grid" data-page-node-id="zDMLlznSIS36jnUV8D2JoF">
+                <div data-page-node-id="2wCNEfIiDjOs2wSCkcMjwF"><img src="assets/dy-stats.jpg" alt="7.8万播放视频后台数据截图" data-page-node-id="WNYH5DMCRLdlf5yCphhsCk"><div class="evi-cap" data-page-node-id="lNQoCU3Mwf2mFOO4wDGZ78">7.8万播放 · 106赞 / 91评论 / 9分享</div></div>
+                <div data-page-node-id="XClhLDsmluVJXGx8RIZXjB"><img src="assets/dy-14k.jpg" alt="1.4万播放视频数据截图" data-page-node-id="wg2AH0flQZaa0OEDBdobPI"><div class="evi-cap" data-page-node-id="YK9vYYG0xe2wXiDW2HUHQ2">1.4万播放 · 外观内容</div></div>
+              </div>
+
+              <div class="quote" data-page-node-id="H5nlnfafQcCpSyb9UCOUQm"><b data-page-node-id="dxv7T5FDniJ4nY6TTUAEQB">复盘：</b>这条线走完我才真正理解内容运营——<b data-page-node-id="QSBWJLtIZ9MsJ7E6qZy6v7">不是"发视频"，是"提假设 → 看数据 → 改一个变量 → 再验证"</b>。播放量不是玄学，它是一个可以被拆解、被定位、被优化的指标。这和运营任何一个产品的思路完全一样：<b>先看数据找出瓶颈在哪，再把力气花在那个瓶颈上</b>，而不是把每个环节都凭感觉重做一遍。</div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- P02 -->
+      <article class="pcard span5 reveal in" data-page-node-id="pUmHET4N9IlTFBEsapQpgg">
+        <div class="cover" data-page-node-id="CQpWqsAB8WkTRwvGumcE82"><span class="pnum" data-page-node-id="HjbQPCTCVX8aDHBINByAbd">NO.02</span><img src="assets/jimeng-store.jpg" alt="即梦生成的视频：分镜提示词与成片对照" data-page-node-id="ebhmivN0EEiAtQXFeMCMsW"></div>
+        <div class="body" data-page-node-id="P801HWI5Lk7U2Qwuhh4qnD">
+          <div class="pmeta" data-page-node-id="gJUiksgz8P5PIGXQyARRGZ"><b data-page-node-id="quF3wvlGUc806qVOTCYxgj">AI内容创作</b><span data-page-node-id="GUExnbO4wLGikneIx2dLDg">即梦 · Seedance</span><span data-page-node-id="af7kKVBjZiMXTN8M0Ht0lB">2026</span></div>
+          <h3 data-page-node-id="zn9DwrDasEs2Pz7uvr2xWR">AI视频创作实验：提示词工程</h3>
+          <p class="desc" data-page-node-id="TPHzFuciAiPn1qBWzQT7mG">用即梦从零创作剧情短片：自己写分镜级提示词，逐镜头控制画面、情绪与音效，产出3条成片。</p>
+          <details data-page-node-id="jG8nilOD1dWcozQBda6PfC">
+            <summary data-page-node-id="MBQArOLdr13GpoehYseb0K">展开完整过程</summary>
+            <div class="pdetail" data-page-node-id="6UBGzqXlolyEGGw6Y7e5WJ">
+              <h4 data-page-node-id="tubwjliToq26eX29vZk90K">CONTEXT — 背景</h4>
+              <p data-page-node-id="Fsf6AWmMrHrL171jjTX4CR">想验证一件事：只靠文字，能不能“导演”出一支有叙事感的视频。</p>
+              <h4 data-page-node-id="hmrnWNNwemDbv6ZkNrf3jb">PROCESS — 过程</h4>
+              <ul data-page-node-id="CkTbW63LUTeotuWdhKm3Di">
+                <li data-page-node-id="aMVD8r8uLkceasBv30U3im">把叙事拆成分镜：逐镜头定义景别、动作神态、台词与音效；</li>
+                <li data-page-node-id="YybbZ73nlLwSqzup9BW8aR">用全景参考 + 风格锁定控制人物与画面的跨镜头一致性；</li>
+                <li data-page-node-id="eQsJMKUsPcEl0MPjg0OtqZ">长镜头脚本：为一段仙侠打斗戏写出完整的多镜头分镜提示词。</li>
+              </ul>
+              <h4 data-page-node-id="hhGTr6paLrTsyiIQNPFuqT">OUTCOME — 结果</h4>
+              <p data-page-node-id="CIQve5q74mGwMB0NHOC9ny">3条成片发布抖音（已获出镜者授权）。</p>
+              <h4 data-page-node-id="b33VEDuNrvKD8FSPzwdUgI">EVIDENCE — 证据</h4>
+              <div class="evi-grid" data-page-node-id="DEVjLENRTPb9YGItaC4QTh">
+                <div data-page-node-id="AanjmCZFSWaIsfIYHnaMfK"><img src="assets/jimeng-story.jpg" alt="仙侠分镜脚本提示词" data-page-node-id="a4TwQfgod1bKfnX35YFeCp"><div class="evi-cap" data-page-node-id="Bo3aUjQ9N1PSjLkqC8lcwC">多镜头打斗分镜脚本</div></div>
+                <div data-page-node-id="6IG3L0Zneqn6jlZP9RdSSC"><img src="assets/jimeng-script.jpg" alt="完整提示词文本" data-page-node-id="gXilQXASu2YGaOElf24lBc"><div class="evi-cap" data-page-node-id="8QeY0Hw9JnefAtNHB8TZgn">逐镜头提示词（情绪/音效/画风）</div></div>
+              </div>
+              <div class="quote" data-page-node-id="GKPhF3YmoVWhS0oE0QMkAv"><b data-page-node-id="KJpxkoYjcmYgvuCvzoHr6D">复盘：</b>写提示词就是在写导演剧本——<b data-page-node-id="cv84CM3iV0dBCH8Dk3fUlt">拆镜头的能力和拆选题是同一种能力</b>。</div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- P03 -->
+      <article class="pcard span5 reveal in" data-page-node-id="yehVgx40b6kJn1Dr9HMQhN">
+        <div class="cover" data-page-node-id="aNXsEtJB1aZkRexIC4GyRp"><span class="pnum" data-page-node-id="8DiCjmEtHoRYDUvvgdCSnN">NO.03</span><img src="assets/dsh-ui.jpg" alt="DeepSeek Harness 智能体工作台运行界面" data-page-node-id="Vnp1I6F9oAOuVCuaMWH1CP"></div>
+        <div class="body" data-page-node-id="yQ0vmeNpOwZviyUOxFgraF">
+          <div class="pmeta" data-page-node-id="DSG4ZsaDX0Hv3MH7AX3K0k"><b data-page-node-id="kA4nFMSfLt7ywQi3aYpfO2">AI工具 · 探索</b><span data-page-node-id="k3GrK6q7hFg0IuVhBOTADE">DeepSeek Harness / GitHub</span><span data-page-node-id="Dt0KApCYAAHz5nEBcUP44i">2026</span></div>
+          <h3 data-page-node-id="ogAVCVH40QdxDF7ftv7723">AI工具链折腾实录</h3>
+          <p class="desc" data-page-node-id="1HTzWjlhVLBKzzKkmfKVsr">从“修好自己的电脑”开始，在GitHub上找到并跑通了一整套AI智能体工具链，沉淀成日常生产力。</p>
+          <details data-page-node-id="U85vk4P6e59ktkHyeWEWZR" open="">
+            <summary data-page-node-id="KrU0DM3Lw10QXxNzETrUzA" style="">展开完整过程​</summary>
+            <div class="pdetail" data-page-node-id="xYIu0zgPHhcIBqE2ahxVQw">
+              <h4 data-page-node-id="Zvz0zdu294N3b7sTyqulxz">CONTEXT — 背景</h4>
+              <p data-page-node-id="vHlHdCftkdxx8sHmANsDDs" style="">起因是电脑卡顿。我没有送修，而是让 DeepSeek 帮我诊断，然后自己去 GitHub 找工具、装环境、跑通全流程。​</p>
+              <h4 data-page-node-id="uGEzOxhntlrqZofgtUGCJJ">PROCESS — 我装了什么</h4>
+              <ul data-page-node-id="xbujMRXhaCwmWYhM69IiaD">
+                <li data-page-node-id="i3LBsI2Y0tziF5rhcyqjg9"><b data-page-node-id="Ucg6Y5cFvbQxL4wELzpe0R">DeepSeek Harness：</b>本地智能体工作台，跑通插件体系与会话管理；</li>
+                <li data-page-node-id="br8sqOGySe5bCrNdFj91xr" style="white-space: pre-wrap;"><b data-page-node-id="rVGO7DYBwuUL4Eubwma6HO">Computer Use：</b>驱动本机的桌面自动化助手（JSON-RPC）；
+</li>
+                
+                <li data-page-node-id="nbFp7MYsA114WwqOPXjOzh" style="font-weight: 400; font-size: 14px; font-style: normal;"><b data-page-node-id="swb85B3tU7kCc3uzuJXrnz" style="">仓颉 Skill：把一整本书蒸馏成知识点与方法论的知识提炼插件</b></li><li data-page-node-id="KDGsIGGFCnEo3hU3sZN9J1" style=""><b data-page-node-id="VpKq7HCIPUOECIcmWEVByy">FlyingMouse Format：</b>批量文档格式转换（PDF / Office / Markdown→Word）；</li>
+                <li data-page-node-id="18lbSExP0ofys6OvOeSzrm" style="white-space: pre-wrap;"><b>Intel(R) UHD Graphics：32.0.101.7080（Intel，2025/11/3）核显驱动<br></b></li>
+              </ul>
+              <h4 data-page-node-id="A4xCfJE4joC4BN7JFRzxKC">EVIDENCE — 证据</h4>
+              <div class="evi-grid cols-3" data-page-node-id="e2F3HrvQ8uyykRYoM6FFTl">
+                <div data-page-node-id="erpxbHUrRQuOAbAn9gtFWv"><img src="assets/dsh-cuse.png" alt="Computer Use 插件" data-page-node-id="LT7JnfWmWzHsQRFcIs7LKF"><div class="evi-cap" data-page-node-id="dNbJ5UgcJlckPTmf2uwyYs">Computer Use 插件</div></div>
+                <div data-page-node-id="DKP7dswRvyAANxANVbNCTg"><img src="assets/dsh-cangjie.png" alt="仓颉Skill插件" data-page-node-id="pTmQQ5WRGHIRRG5TKwN6dD"><div class="evi-cap" data-page-node-id="ut8pHJtjkfJVDnAKeNLZTz">仓颉知识蒸馏 Skill</div></div>
+                <div data-page-node-id="mwL2Jen1asSPsisQV3lC3r"><img src="assets/flyingmouse.png" alt="FlyingMouse格式转换工具" data-page-node-id="IDT3aNqPhfibxtzFEU0PPB"><div class="evi-cap" data-page-node-id="pgSIkW0QFVqyhHsdq7GZCo">FlyingMouse 格式转换</div></div>
+              </div>
+              <div class="quote" data-page-node-id="LDfT0D6ncQARLZLLmFdcSh"><b data-page-node-id="Yjv0hmoGRYSLA1xLhCkddy">复盘：</b>这件事从小学装游戏MOD起就没变过——<b data-page-node-id="J6mL6YVO6JK06KDEKnMrkR">遇到问题 → 找工具 → 跑通它</b>。AI只是让这个循环更快了。</div>
+              <p style="margin-top:12px;font-size:13px;color:var(--ink-soft);" data-page-node-id="2CjCipgT6uoOWnMEpXttGn">▸ 后续：这里说的“下一步”我已经做完了——现在是一条跑得通的自动化流水线（见下方 NO.06），并用它完成了一份真实的运营分析（NO.07）。</p>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- P04 -->
+      <article class="pcard span7 reveal in" data-page-node-id="HTDX9GBzB5iV8eElQVW968">
+        <div class="cover" data-page-node-id="EfW3AHywlV75U5osPt3cBb"><span class="pnum" data-page-node-id="m8rJUU23TlGa4CTlWiedl0">NO.04</span><img src="assets/bank-2.jpg" alt="中原银行厅堂实习现场" data-page-node-id="blUd8y2x21sOtfNQMkZGv9"></div>
+        <div class="body" data-page-node-id="B7eMVtb6bfuYAqoR3dVlyX">
+          <div class="pmeta" data-page-node-id="n6YAYZaOzcDMUIU7LsUY9m"><b data-page-node-id="IV0YBiN7l7b1QuCJguiIL4">用户运营 · 现场</b><span data-page-node-id="IhSVYu09uupP627ShIRlrX">中原银行 · 大堂经理运营助理</span><span data-page-node-id="gxYt7p7bTgO47JOxrSq2oi">2026.07 — 08</span></div>
+          <h3 data-page-node-id="OnzHSCXwxOx8udpNIRtPSj">中原银行厅堂运营实习</h3>
+          <p class="desc" data-page-node-id="A6DyDKIttezX5A2Bgubffo">厅堂流量调度、客户分层台账、现场服务运营。参与推动智能机具替代率提升约40%，协同完成理财业务规模700余万。</p>
+          <details data-page-node-id="NekvqxsN3Zhu5195HTBDsu">
+            <summary data-page-node-id="Uey6JBv1MKiQ1J1iHVV3vW">展开完整过程</summary>
+            <div class="pdetail" data-page-node-id="04BUEGnF1HkhFuG7Mwc8NN">
+              <h4 data-page-node-id="QZW8ecG8MZrpOiqtht3sED">CONTEXT — 背景</h4>
+              <p data-page-node-id="QAZJCdsexGZhubCdRRgQGm">网点厅堂客流大、等候时间长，智能机具使用率有提升空间。</p>
+              <h4 data-page-node-id="bXfos44zi66v8uB48uT327">WHAT I DID — 我做了什么</h4>
+              <ul data-page-node-id="IkFpnENToEZ7rsasjkCFZ5">
+                <li data-page-node-id="z5oflw5BLjmsFCS9jzjoRJ"><b data-page-node-id="PslQutOkqeQHwnnap7J4W7">数据运营：</b>每天统计引导客户使用机具的人数，与机具后台数据对比测算替代率变化——用数据验证每一次话术与动线的调整；</li>
+                <li data-page-node-id="blusfUkLtU80hnNH5ZWFi0"><b data-page-node-id="gknAFrPzmBSgJ3I4s4IN0T">转化优化：</b>参与设计引导话术与客户动线，参与推动智能机具替代率提升约40%；</li>
+                <li data-page-node-id="z8ews1FeuBfP3JngQFD8nk"><b data-page-node-id="BE80TUe0QbRZptCEvpD0vE">用户分层：</b>协助搭建客户标签台账，逐条梳理客户特征并分层归类，供理财经理协同经营；</li>
+                <li data-page-node-id="PFhOq5rR8lkcxsXlAedShZ"><b data-page-node-id="phdMyvW3zYPRABTKpcwydG">AI提效：</b>把AI辅助的Excel数据清洗引入日常整理工作，同等任务耗时约30分钟 → 15分钟；</li>
+                <li data-page-node-id="wAkTV6LnOzUfSLhdfMkqMa"><b data-page-node-id="F1aKYhozELWVFZLXML6yVH">应急处置：</b>客户因等候过长发生争执时，主动介入安抚、用专业知识解释流程、协同同事2小时内闭环，事件零升级。</li>
+              </ul>
+              <h4 data-page-node-id="6meDfnvjA1OsVIsT4otzes">EVIDENCE — 现场</h4>
+              <div class="evi-grid cols-3" data-page-node-id="uojh8RRNd5UJSiOBafxBFb">
+                <div data-page-node-id="Gtk6vWLhrtPCN2WQmpnuPW"><img src="assets/bank-1.jpg" alt="厅堂服务现场1" data-page-node-id="MNdAUTDLokhzOVfTEJJSDV"><div class="evi-cap" data-page-node-id="FlXboQARdm5SwpWdrWWntn">厅堂现场</div></div>
+                <div data-page-node-id="oLDDmUY02xMw6R8A5WwaQB"><img src="assets/bank-2.jpg" alt="厅堂服务现场2" data-page-node-id="goZRZsETV3IvvF38ln375J"><div class="evi-cap" data-page-node-id="WfxvjINek7Zcujl7vgXQkI">客户引导</div></div>
+                <div data-page-node-id="Pzze50vXoNRMpHKg4D81bn"><img src="assets/bank-3.jpg" alt="厅堂服务现场3" data-page-node-id="6qFLiGJFLht96yJJp23hBw"><div class="evi-cap" data-page-node-id="trFLZsSKH5X7GdsTrt5s4V">服务协同</div></div>
+              </div>
+              <div class="quote" data-page-node-id="LA9TJw9oNQqB6mXdAJpFDp"><b data-page-node-id="dL7F8NVfoKGodzwX9797rh">复盘：</b>第一次在真实服务场景里理解“用户分层”——<b data-page-node-id="mpSaFNunPqvA7VPGZHPo3I">不同客户需要不同的话术和动线；数据不是报表，是第二天改进的依据。</b></div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+      <!-- P05 -->
+      <article class="pcard span12 p05 reveal" data-page-node-id="Gm0AuaxhHO9yQDvAek8IzC">
+        <div class="body" data-page-node-id="tEeEveWYhDye3Z7oFXvVEE">
+          <div class="pmeta" data-page-node-id="0QwNFCSQWfjnQfUZc5R35W"><b data-page-node-id="9U0Bzyy2Rd4dB6rByPLooy">NO.05 — 项目管理 · 数据</b><span data-page-node-id="kRNUfgCT7L3anYI6MhkPyX">工程造价实践</span><span data-page-node-id="lAFatPh1WiiJZfisnoV4Z7">2025.01 — 06</span></div>
+          <h3 data-page-node-id="sc4jRG7cXCtzkoQJNRxdBE">四层酒店招投标预算：<em data-page-node-id="SAFB1KJo08OEGFOkjBwSgu">780万</em> 的严谨</h3>
+          <p class="big-num" style="margin:22px 0 6px;" data-page-node-id="KXjpspsjIyAvpwi9gt4vLA">¥7,800,000 <small data-page-node-id="Emi69T5E292YHcyAOqKwx6">预算成果 · 独立负责全流程</small></p>
+          <p class="desc" data-page-node-id="Ue4iX8aF0DVqWOV6kMutvv">被组员推选为项目负责人——因为他们知道我愿意扛下最多的工作量。用广联达完成工程量统计与成本测算，输出20万字+成果文档。</p>
+          <details data-page-node-id="rGg1emutOlbAQ85WPO2y5I">
+            <summary data-page-node-id="pFJnNBsYYUupW5k6pAAMNk">展开完整过程</summary>
+            <div class="pdetail" data-page-node-id="0kTDyBt34SZzpdf6Fami3N">
+              <div class="stat-row" data-page-node-id="k0Fg5FR8MUdBVorRev06BO">
+                <span class="stat" data-page-node-id="ASL9DrKfK0njOtAHmePk6G"><b data-page-node-id="JvnJ2DbJCJaa3QEcZ8iZUE">780万</b> 项目预算</span>
+                <span class="stat" data-page-node-id="EQuyghBImYUZdEMzbmbZsw"><b data-page-node-id="syOIpHliSWSK0vPoG1yX3O">1000+</b> 工程量数据条目</span>
+                <span class="stat" data-page-node-id="GKCL6686xdzUejdFuf8V1F"><b data-page-node-id="7CTgEqqBS0zlesJFORsJGx">20万字+</b> 成果文档</span>
+                <span class="stat" data-page-node-id="fkNBJAT3SfCfDUaH9X8Opx"><b data-page-node-id="GyG617Li4Ow8BppPReCiNE">AI辅助</b> 豆包查询定额与算量规则</span>
+              </div>
+              <h4 data-page-node-id="qQBP0tEte7CELncCkx8YaS">PROCESS — 过程</h4>
+              <ul data-page-node-id="a9BaKSuwAXTjkOvAmHjjIJ">
+                <li data-page-node-id="y7yuxJiubsDKBeEinNYjW7">广联达建模：楼、板、柱、梁逐项拆解；</li>
+                <li data-page-node-id="HBgOovJof7kLqwMcOtFWRa">相似数据复制套用 + 逐条人工校核；</li>
+                <li data-page-node-id="Mi6L2hgLoTV4rGFMECgRzA">依据市场价完成成本测算与方案优化，输出完整预算报告。</li>
+              </ul>
+              <div class="quote" data-page-node-id="DP13p9Hs27wHO07AfNIsao"><b data-page-node-id="NavtWdhdAVtqJPFm3UXf5c">复盘：</b>最难的是建模阶段的重复修改。我的办法是——<b data-page-node-id="Wr5lJSlVYkHzP9VUY1jzLX">可复制的数据坚决复制，必须人工的逐条过</b>。后来我发现，这也是运营做数据台账的同一套逻辑。</div>
+            </div>
+          </details>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ AUTOFLOW — SELF-BUILT ============ -->
+<section id="autoflow" style="padding-top:26px;" data-page-node-id="AFsec01">
+  <div class="wrap" data-page-node-id="AFwrap01">
+    <div class="sec-head reveal" data-page-node-id="AFhead01">
+      <div class="sec-tag" data-page-node-id="AFtag01">01.5 — SELF-BUILT SYSTEM</div>
+      <h2 class="sec-title" data-page-node-id="AFtitle01">我自己搭的一条流水线</h2>
+      <p class="sec-desc" data-page-node-id="AFdesc01">上面五个项目是“我在岗位上做了什么”；这一个不一样——它是我为了自己而写的一套系统，从需求到上线全部独立完成。</p>
+    </div>
+
+    <div class="work-grid" data-page-node-id="AFgrid01">
+      <article class="pcard span12 p05 reveal" data-page-node-id="AFcard01">
+        <div class="body" data-page-node-id="AFbody01">
+          <div class="pmeta" data-page-node-id="AFmeta01"><b data-page-node-id="AFmeta01b">NO.06 — AI应用 · 自动化</b><span data-page-node-id="AFmeta01c">独立设计与开发</span><span data-page-node-id="AFmeta01d">2026.10</span></div>
+          <h3 data-page-node-id="AFh301">AutoFlow：把<em data-page-node-id="AFh301e">每天手动刷资讯</em>变成一条跑得通的流水线</h3>
+          <p class="big-num" style="margin:22px 0 6px;" data-page-node-id="AFnum01">抓取 → AI处理 → 分类统计 → 分析报告 <small data-page-node-id="AFnum01s">4 步全自动 · 零第三方密钥</small></p>
+          <p class="desc" data-page-node-id="AFdesc02">起因很具体：我想持续了解 AI 行业的动向，但手工点开四五个网站、自己读、自己摘，坚持不下来。于是我把它做成了一个真正的应用——不是界面原型，是能跑的后端服务。后来我又往前走了一步：光有摘要还不够，我想知道<b>这批信息在结构上是什么样</b>——是「能上手的新工具」多，还是「评论判断」多？这个比例会直接决定内容选题该往哪做。于是加了自动分类和一键导出分析报告。</p>
+          <p class="demo-link" data-page-node-id="AFdemo01">在线演示：<a href="/autoflow/" target="_blank" rel="noopener">打开 AutoFlow 工作流 →</a> <span class="demo-note">（可直接点「开始运行」，会真实抓取、调用 AI 分类，并生成可下载的分析报告）</span></p>
+          <details data-page-node-id="AFdet01">
+            <summary data-page-node-id="AFsum01">展开完整过程</summary>
+            <div class="pdetail" data-page-node-id="AFpd01">
+              <div class="stat-row" data-page-node-id="AFstat01">
+                <span class="stat" data-page-node-id="AFs1"><b data-page-node-id="AFs1b">5 个</b> 公开信息源并行抓取</span>
+                <span class="stat" data-page-node-id="AFs2"><b data-page-node-id="AFs2b">58 条</b> 单次抓取原始条目</span>
+                <span class="stat" data-page-node-id="AFs3"><b data-page-node-id="AFs3b">5 类</b> 自动打标并统计结构</span>
+                <span class="stat" data-page-node-id="AFs4"><b data-page-node-id="AFs4b">1 键</b> 导出分析报告 / 简报</span>
+              </div>
+
+              <h4 data-page-node-id="AFh401">WHY IT'S NOT TRIVIAL — 为什么它不只是一个页面</h4>
+              <ul data-page-node-id="AFul01">
+                <li data-page-node-id="AFli01"><b data-page-node-id="AFli01b">后端抓取，不是前端拉：</b>浏览器直连外部 RSS 会被跨域（CORS）挡死。所以抓取必须放在服务端做，前端只拿整理好的结果。</li>
+                <li data-page-node-id="AFli02"><b data-page-node-id="AFli02b">白名单，不是开放代理：</b>接口不接受前端传任意 URL，只允许预先配置的公开源——否则这个应用会变成一个人人可用的翻墙代理，是真实的安全问题。</li>
+                <li data-page-node-id="AFli03"><b data-page-node-id="AFli03b">源配额均衡：</b>Hacker News 更新极频繁，会在排序里把中文源全部挤掉。所以限制单个源最多占一半条数，保证简报里中英文都有。</li>
+                <li data-page-node-id="AFli04"><b data-page-node-id="AFli04b">AI 走云服务，不存密钥：</b>大模型调用通过云服务代理完成，代码里没有任何 API Key，可以安全地公开部署。</li>
+                <li data-page-node-id="AFli05"><b data-page-node-id="AFli05b">统计归服务端算，不采信模型：</b>模型只负责给每条打一个标签，写一句话理由；“哪类占多少、占比多少”全部由服务端用代码算出来。<b data-page-node-id="AFli05c">因为报告里的数字必须能被复算</b>——如果比例是模型随口说的，这份报告在面试里就站不住脚。这是我在设计时主动划的一条线。</li>
+                <li data-page-node-id="AFli06"><b data-page-node-id="AFli06b">分类要有兜底：</b>让模型输出格式固定为「类别ID|理由」，解析失败或返回了不存在的类别时，一律归到“其他”——宁可丢掉一条，也不能让脏数据污染后面的统计结果。</li>
+              </ul>
+
+              <h4 data-page-node-id="AFh402b">HOW THE ANALYSIS WORKS — 报告是怎么出来的</h4>
+              <ul data-page-node-id="AFul03">
+                <li data-page-node-id="AFli21"><b data-page-node-id="AFli21b">分类体系是设计过的：</b>工具类 / 观点类 / 融资商业 / 技术研究 / 其他。这不是随手分的——它对应内容运营的两个基本供给：「能上手的东西」和「怎么看这件事」，直接决定选题该偏实测还是偏解读。</li>
+                <li data-page-node-id="AFli22"><b data-page-node-id="AFli22b">结论是从数字里推的，不是套话：</b>比如当工具类多于观点类时，报告会明说“这批源偏发布新东西，同质化风险高，纯搬运很难建立差异，需要叠加自己的实测”。结论由统计驱动，换个样本结论就会变。</li>
+                <li data-page-node-id="AFli23"><b data-page-node-id="AFli23b">一条流水线两种产出：</b>「分析报告」看结构（分布、占比、来源构成），「简报」看内容（摘要 + 行动要点）。同一批数据，面向“我要判断趋势”和“我要快速过一遍”两种用途。</li>
+              </ul>
+
+              <h4 data-page-node-id="AFh402">PROBLEMS I HIT &amp; FIXED — 踩到并修掉的坑</h4>
+              <ul data-page-node-id="AFul02">
+                <li data-page-node-id="AFli11"><b data-page-node-id="AFli11b">36氪的 RSS 已经死了。</b>测出来 <code>/feed</code> 等地址全部返回网页而不是订阅源，RSSHub 镜像也不可达。我没有让它留在界面上“假装能抓”，而是换成实测有效的爱范儿、极客公园。</li>
+                <li data-page-node-id="AFli12"><b data-page-node-id="AFli12b">模型选错，速度差 8 倍。</b>默认模型生成一条摘要要 122.6 秒，换成 flash 档只要 15.3 秒，而且质量更好——它会诚实地说“原文摘要不含正文”，而不是硬编内容。所以加了模型优先级。</li>
+                <li data-page-node-id="AFli13"><b data-page-node-id="AFli13b">并发救不了限流。</b>我原以为串行改并发能大幅提速，实测发现服务端按账号限流，8 条仍要 4 分多钟。既然如此，我没有在界面上写“约 2.5 分钟”这种做不到的承诺，而是把默认处理量降到 8 条，并让界面实时显示进度和已用时间。</li>
+              </ul>
+
+              <h4 data-page-node-id="AFh403">WHAT THIS SAYS — 这件事说明什么</h4>
+              <p data-page-node-id="AFp03">我做的不是“调个 API 玩一下”。是从真实需求出发，自己选技术方案、自己踩坑、自己判断哪里该退让，最后交付一个能用的东西。过程中每一个“我以为能行但其实不行”的地方，我都是靠实测数据改的方案——而不是靠猜。</p>
+
+              <div class="quote" data-page-node-id="AFquote01"><b data-page-node-id="AFquote01b">这和运营的关系：</b>运营的核心动作就是<b data-page-node-id="AFquote01c">发现问题 → 找工具 → 跑通它 → 把重复的事变快变好</b>。这条流水线是我用代码把这句话又证明了一次。</div>
+            </div>
+          </details>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ANALYSIS — SELF-BUILT ============ -->
+<section id="analysis" style="padding-top:26px;" data-page-node-id="ANsec01">
+  <div class="wrap" data-page-node-id="ANwrap01">
+    <div class="sec-head reveal" data-page-node-id="ANhead01">
+      <div class="sec-tag" data-page-node-id="ANtag01">01.6 — DATA ANALYSIS</div>
+      <h2 class="sec-title" data-page-node-id="ANtitle01">没有转发数据，我就换一个能算的口径</h2>
+      <p class="sec-desc" data-page-node-id="ANdesc01">上面那条流水线是我自己用的工具。而这一份，是我把它用来回答一个真实的运营问题：<b>如果我来运营一个科技资讯账号，该主打哪类内容？</b></p>
+    </div>
+
+    <div class="work-grid" data-page-node-id="ANgrid01">
+      <article class="pcard span12 p05 reveal" data-page-node-id="ANcard01">
+        <div class="body" data-page-node-id="ANbody01">
+          <div class="pmeta" data-page-node-id="ANmeta01"><b data-page-node-id="ANmeta01b">NO.07 — 内容运营 · 数据分析</b><span data-page-node-id="ANmeta01c">独立完成 58 条样本分析</span><span data-page-node-id="ANmeta01d">2026.10</span></div>
+          <h3 data-page-node-id="ANh301">用「跨源覆盖度」替代拿不到的<em data-page-node-id="ANh301e">转发数据</em></h3>
+          <p class="big-num" style="margin:22px 0 6px;" data-page-node-id="ANnum01">结论：工具类做基本盘 · 观点类做差异化 <small data-page-node-id="ANnum01s">58 条真实样本 · 5 个来源 · 全部代码复算</small></p>
+          <p class="desc" data-page-node-id="ANdesc02">我想知道哪类内容值得做，但 RSS 里没有阅读量和转发数——这是真实的约束，不是可以绕过的。所以我没有编一个“转发量”出来，而是换了个<b>可算、可复算</b>的口径：一类内容被多少个独立来源同时报道。被越多源追着写的话题，就是行业真正在关注的方向。</p>
+          <p class="demo-link" data-page-node-id="ANdemo01">在线查看：<a href="/analysis/" target="_blank" rel="noopener">打开完整分析报告 →</a> <span class="demo-note">（含环形图、四象限图、源×类别矩阵，以及全部 58 条的分类依据）</span></p>
+          <details data-page-node-id="ANdet01">
+            <summary data-page-node-id="ANsum01">展开完整过程</summary>
+            <div class="pdetail" data-page-node-id="ANpd01">
+              <div class="stat-row" data-page-node-id="ANstat01">
+                <span class="stat" data-page-node-id="ANs1"><b data-page-node-id="ANs1b">58 条</b> 真实样本逐条分类</span>
+                <span class="stat" data-page-node-id="ANs2"><b data-page-node-id="ANs2b">100%</b> 工具类跨源覆盖度</span>
+                <span class="stat" data-page-node-id="ANs3"><b data-page-node-id="ANs3b">21%</b> 观点类占比（空位所在）</span>
+                <span class="stat" data-page-node-id="ANs4"><b data-page-node-id="ANs4b">0 条</b> 编造的转发数据</span>
+              </div>
+
+              <h4 data-page-node-id="ANh401">THE CONSTRAINT — 先说清数据的边界</h4>
+              <ul data-page-node-id="ANul01">
+                <li data-page-node-id="ANli01"><b data-page-node-id="ANli01b">转发量真的拿不到。</b>RSS 只提供标题、摘要和发布时间，不含阅读量、转发数、点赞数，公开源也没有接口能取。所以“哪类转发高”这个问题，用这批数据<b data-page-node-id="ANli01c">无法直接回答</b>——任何直接给出转发量的结论都是编的。</li>
+                <li data-page-node-id="ANli02"><b data-page-node-id="ANli02b">于是我找了一个替代指标。</b>「跨源覆盖度」= 报道过某类内容的源数 ÷ 总源数。一个话题如果被多个<b data-page-node-id="ANli02c">独立</b>来源同时写，说明它是行业内被持续追踪的——这是在拿不到转发数据时，最接近“热度”的可算代理指标。</li>
+                <li data-page-node-id="ANli03"><b data-page-node-id="ANli03b">还加了两个防偏指标。</b>结构占比（防止只看绝对条数被大源带偏）、源×类别矩阵（识别某类内容是否只集中在个别媒体，那样就只是那家的口味，不代表普遍需求）。</li>
+              </ul>
+
+              <h4 data-page-node-id="ANh402">THE FINDING — 算出来是什么</h4>
+              <ul data-page-node-id="ANul02">
+                <li data-page-node-id="ANli11"><b data-page-node-id="ANli11b">工具类是绝对的“共识型”：</b>占比 53%（31 条），而且 <b data-page-node-id="ANli11c">5 个来源全都在写</b>（覆盖度 100%）。受众基数最大，但也意味着同质化最严重——搬运型内容最难出头。</li>
+                <li data-page-node-id="ANli12"><b data-page-node-id="ANli12b">观点类才是“空位型”：</b>只有 21% 的条数，但有 <b data-page-node-id="ANli12c">4/5 个来源都在报道它</b>（覆盖度 80%）。需求已经被行业验证，供给却没跟上——<b data-page-node-id="ANli12d">不是没人看，是没人做深</b>。</li>
+                <li data-page-node-id="ANli13"><b data-page-node-id="ANli13b">融资商业、技术研究属“边缘型”：</b>占比低（16% / 5%）且覆盖也只有 40%，只集中在个别来源，不足以作为主线。</li>
+                <li data-page-node-id="ANli14"><b data-page-node-id="ANli14b">四象限的阈值不是拍脑袋定的。</b>占比用本样本的<b data-page-node-id="ANli14c">均值</b>（23.7%）、覆盖度用<b data-page-node-id="ANli14d">半数来源</b>（50%）——后者有明确含义：“过半数来源都在写”。样本变了，判断跟着变。</li>
+              </ul>
+
+              <h4 data-page-node-id="ANh403">WHY IT HOLDS UP — 为什么这份结论站得住</h4>
+              <ul data-page-node-id="ANul03">
+                <li data-page-node-id="ANli21"><b data-page-node-id="ANli21b">统计全部由代码算，不采信模型。</b>大模型只负责给每条打一个标签、写一句归类理由；“哪类占多少、覆盖多少源”全部由服务端和渲染层用代码算出来。<b data-page-node-id="ANli21c">因为报告里的每个数字，我在面试里都要能被复算。</b></li>
+                <li data-page-node-id="ANli22"><b data-page-node-id="ANli22b">每条判断都留了可核查的依据。</b>报告末尾列出全部 58 条的分类理由，谁都可以逐条看：这条为什么归工具类而不归观点类。结论的可信度取决于每一条是否合理，所以我把它摊开。</li>
+                <li data-page-node-id="ANli23"><b data-page-node-id="ANli23b">"哪类没人看"我明确标注了是推断。</b>同样没有直接的受众数据，所以用“低供给 + 低覆盖”反推，并在报告里写明这是<b data-page-node-id="ANli23c">供给侧推断，不是直接的受众测量</b>——不把推断说成事实。</li>
+                <li data-page-node-id="ANli24"><b data-page-node-id="ANli24b">58 条是逐条跑出来的，不是生成的。</b>写了带断点续跑的批处理脚本，58 条全部真实调用模型分类，中途每条都落盘，中断不用重跑。</li>
+              </ul>
+
+              <h4 data-page-node-id="ANh404">WHAT THIS SAYS — 这件事说明什么</h4>
+              <p data-page-node-id="ANp03">运营里最常遇到的处境就是“想要的数据没有”。这份分析真正想证明的不是我会画图，而是<b data-page-node-id="ANp03b">当理想数据缺失时，我能找到一个有逻辑支撑的替代口径，把问题继续往前推，同时诚实标出推断的边界</b>——而不是编一个好看的结论交差。</p>
+
+              <div class="quote" data-page-node-id="ANquote01"><b data-page-node-id="ANquote01b">这和运营的关系：</b>内容运营每天要回答的就是“做哪类内容”。我做这件事的路径是：<b data-page-node-id="ANquote01c">先明确数据边界 → 找可算的替代指标 → 用代码算出结论 → 标清推断范围 → 给出可执行的建议</b>。这条路径，比结论本身更重要。</div>
+            </div>
+          </details>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section id="experience" style="padding-top:40px;" data-page-node-id="uNayDC6aDIZQ3mESbFrY92">
+  <div class="wrap" data-page-node-id="o0fHKwVnGfcgGQgnlnA1Ik">
+    <div class="sec-head reveal" data-page-node-id="mirdAKCuuYBv7nTMVKcsJl">
+      <div class="sec-tag" data-page-node-id="Q6zChoCOfvqLJGuSwwfXAo">02 — EXPERIENCE</div>
+      <h2 class="sec-title" data-page-node-id="80HmFrwAvIxAMXeHZq5aNH">运营经历</h2>
+      <p class="sec-desc" data-page-node-id="4ShkY06PalgfF9M0cHtlbH">三段实习 + 两段在校经历，覆盖零售、制造、金融三种一线现场。</p>
+    </div>
+
+    <div class="exp-note reveal" data-page-node-id="ZhXsCf0I72IxYYbFcQGzvv">
+      回头看，我在每一段经历里都在做同一件事：<b data-page-node-id="HJN2cRtEB3NzCq8kxToejj">把重复的劳动变得更快、更稳</b>——
+      胖东来的台账复用、立讯的协作流程与颜色标签、银行的AI数据清洗。这不是巧合，是我的工作本能。
+    </div>
+
+    <div class="timeline" data-page-node-id="NCmWdILzfj23C3DYzan66B">
+      <div class="titem reveal" data-page-node-id="DrBHNm2M97vfc11VA8VaqL">
+        <div class="tmeta" data-page-node-id="v1yQkQk848vTwNAK0EnDK6">2026.07 — 2026.08</div>
+        <h3 data-page-node-id="5B8dE6IIlraOAheenxKbn6">中原银行 <span data-page-node-id="274i7g4RDC9u0HD1Bp2lXG">大堂经理运营助理</span></h3>
+        <ul data-page-node-id="3blclEcWIUZAFs2k8U9kL3">
+          <li data-page-node-id="AlPDVjwfI0f6zkM1KhTBzf">参与厅堂流量调度与客户动线引导，参与推动智能机具业务替代率提升约<b data-page-node-id="zsosle7FoQaSjQ5RcO2W10">40%</b>；</li>
+          <li data-page-node-id="Rrw1i0S6ZP6JqVGCbhzCAN">协助搭建客户标签台账并完成分层归类，联动理财经理协同经营，协助完成理财业务规模<b data-page-node-id="phv46prh3EkslbLlt3KuC8">700余万</b>；</li>
+          <li data-page-node-id="hnoiur7Q8mhOXkh38Ogqfc">客户纠纷<b data-page-node-id="cn6OL36haxBMbr8PlQHlMC">2小时内闭环</b>化解，事件零升级；将AI辅助Excel数据清洗引入日常工作（约30分钟→15分钟）。</li>
+        </ul>
+        <div class="tags" data-page-node-id="Db1AYpFOWO8Ljm3V1FEAwT"><span class="tag" data-page-node-id="yKvjjavjm0GFZHyLs8bKFH">用户分层</span><span class="tag" data-page-node-id="Gw6Yy5ta7fCK5MEWcyD6hF">数据运营</span><span class="tag" data-page-node-id="2eMlnHHqoC5jtJ8fcm6Sdr">话术设计</span><span class="tag" data-page-node-id="Z0gyXqQhwXaeDBGxskqn4W">应急处置</span></div>
+      </div>
+      <div class="titem reveal" data-page-node-id="MOjDRaEvhUtgtU2vwEXGLb">
+        <div class="tmeta" data-page-node-id="LlKmmi0YnNRtb1t4Sq8vlb">2026.01 — 2026.03</div>
+        <h3 data-page-node-id="4Ue6NnJqQtiOsRUX1KZVtq">立讯精密（昆山联滔）<span data-page-node-id="6oeQj0Fk8ib0KFFGe3SlBN">品质管理实习生 QC</span></h3>
+        <ul data-page-node-id="ya95JEfF1wP3mFGqTI8Fxz">
+          <li data-page-node-id="tEbBEtAapLILOBberEEddU">PCBA质量检验，日均检测<b data-page-node-id="JDA2NchIozydutFDFYonJu">300+件</b>；负责检验日报与异常数据汇总；</li>
+          <li data-page-node-id="oGK8M46TovkusP4h7EXOeb">提出<b data-page-node-id="S0Odt5FJNXHDCY6wghEddq">2项改进建议</b>并落地：跨岗位协作流程优化、不良品颜色标签防混淆（目视化防错）。</li>
+        </ul>
+        <div class="tags" data-page-node-id="eB5QucUt09UCJ73eQMxiTM"><span class="tag" data-page-node-id="8WnpLNeOV13jpGBdThzO3F">流程优化</span><span class="tag" data-page-node-id="vt5I8IpG2JlCicWljomO2R">目视化管理</span><span class="tag" data-page-node-id="vJj9gYsehMRn6rCJoGdlYY">数据处理</span></div>
+      </div>
+      <div class="titem reveal" data-page-node-id="6CTEI817DlTWDdr2LCK9aH">
+        <div class="tmeta" data-page-node-id="ek8hnvdErN7NnJO4TgFDzA">2025.07 — 2025.09</div>
+        <h3 data-page-node-id="zboqdKJpJiDALCPdZeahNU">胖东来 <span data-page-node-id="9tAUnYoPNeKOM1sv5Fw9Yq">店铺运营专员</span></h3>
+        <ul data-page-node-id="MPvgn2I5EHJQvvTS9o2uNf">
+          <li data-page-node-id="X2H720q07Gq57sybl3VHiB">商品陈列、价签校验与动销台账；主动发现“同商品多次售卖可台账复用”的效率方法；</li>
+          <li data-page-node-id="e3d46I2CBGHtdhNlA5tHMY">提出<b data-page-node-id="8yT5x4YrrppeDRegAhIaS2">陈列优化建议</b>：将高吸引力商品调整至显眼位置；高峰期客流疏导与促销落地。</li>
+        </ul>
+        <div class="tags" data-page-node-id="nF4w4bEA6cgA2ncIQeH3V6"><span class="tag" data-page-node-id="I6Q0WlUgobHIV0C8uMyD0O">零售运营</span><span class="tag" data-page-node-id="4VYCjp6hlcgvXIdsH7nkYF">陈列转化</span><span class="tag" data-page-node-id="vljP1p0cdu4RGneOOE96fk">台账管理</span></div>
+      </div>
+      <div class="titem reveal" data-page-node-id="LNatZGDJV0fiK3WUl6IB4e">
+        <div class="tmeta" data-page-node-id="ghXLi190BhRGtNqTm9zsjI">2024.09 — 2025.05</div>
+        <h3 data-page-node-id="DnfqtyhG6fB3yh1Rm0IX7H">校创新创业协会 <span data-page-node-id="J0eH1UIn42ICuHPNGqfFg7">运营专员</span></h3>
+        <ul data-page-node-id="TMMZdat6jIJADurD4GsRG9">
+          <li data-page-node-id="mSaqDHPWNiWz5QHt10A8SY">校园商业活动全流程：前期市场调研（学生消费偏好）、校外商户对接与诉求收集；</li>
+          <li data-page-node-id="CEqJZqRa40XCXNQUQQFJLY">设计<b data-page-node-id="w8XxJFaJYjlEm0LqeM7eIC">阶梯式优惠档位</b>（买得越多折扣越高）；现场客流与销售数据记录、活动后复盘。</li>
+        </ul>
+        <div class="tags" data-page-node-id="8A3AMkqIgy2JVTgJ9VgueE"><span class="tag" data-page-node-id="7GKcfRQwaeQLidZGvGkant">市场调研</span><span class="tag" data-page-node-id="3Si3S22rnv0joPEErfjXEJ">商户对接</span><span class="tag" data-page-node-id="YG7R0QFUn8tebLEw1KbAQ3">活动执行</span></div>
+      </div>
+      <div class="titem reveal" data-page-node-id="ySg4hHnXm5MnHCyfI8L8r1">
+        <div class="tmeta" data-page-node-id="QL1SrJfqwCLDyA0PWOlgCL">2023.09 — 至今</div>
+        <h3 data-page-node-id="bJ6xgQZbYO3GHj8CDZE9Pz">班级劳动委员 <span data-page-node-id="mbYFpRdyMcmq6lQYsNm5Po">学生职务</span></h3>
+        <ul data-page-node-id="HkJga964lDzHutMH4k7lGG">
+          <li data-page-node-id="SrxOQD0d0REMrw1sbxIRyb">班费管理<b data-page-node-id="3ZBEenTDpfPKYyzvOCt7q7">3000+元</b>，账目准确率<b data-page-node-id="r5rQ84AOwihAnvJJJizI7I">100%</b>；组织班级活动4场，参与率<b data-page-node-id="IsPGpUOsUDJm8vHiEdohzE">95%+</b>；</li>
+          <li data-page-node-id="6nPoO0p8D2EqDY353zkVlP">建立班级事务信息传达机制，协助辅导员完成学生信息统计。</li>
+        </ul>
+        <div class="tags" data-page-node-id="XrXEQo9PkIwJGIVBWso5aX"><span class="tag" data-page-node-id="b4B7LYJpWUcxKzVmA3UleP">责任心</span><span class="tag" data-page-node-id="Wfp5Yb8caOZOXdDrGRdZf0">组织协调</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ ABOUT ============ -->
+<section class="about" id="about" data-page-node-id="5AtyUNaurhXxtrnYmT1OnU">
+  <div class="wrap" data-page-node-id="X43xe8kwxFrMSHIBVMDKXD">
+    <div class="sec-head reveal" data-page-node-id="uue2x4vGTmvBW6m80362A3">
+      <div class="sec-tag" data-page-node-id="OnLUZrNvNPs7F5R2ai3eVX">03 — ABOUT ME</div>
+      <h2 class="sec-title" data-page-node-id="X2yHlbohDhmorv8N9g0paP">关于我：一条跑了十几年的路</h2>
+    </div>
+
+    <div class="about-grid" data-page-node-id="lLBZcfcyx6Fcpr1W3Sk9ZW">
+      <div class="about-photo reveal" data-page-node-id="IfX0HwL2yIrf2XRSh5Eh6C">
+        <div class="frame" data-page-node-id="drtJ5mmyoraH9CeuBYm9Qi"><img src="assets/selfie.jpg" alt="黄鑫浩生活照" data-page-node-id="lEWNyP7Sj3rMqV7dvj7fSK"></div>
+        <div class="cap" data-page-node-id="1KaFcH3dVnnEkE0xYNCMaV">黄鑫浩 · 20岁 · 郑州<br data-page-node-id="F4Sq1kogJOHqLcNXmrJ09d">工程造价在读 · 2027届 · 随时到岗</div>
+      </div>
+      <div data-page-node-id="5I8J6Ufp1zNR5UQ2CoA9jF">
+        <div class="act reveal" data-page-node-id="7p99dUGeAUPmJMPE9wVqRF">
+          <div class="act-no" data-page-node-id="CM7oZS8ZHUy1MtpFyygAGi">第一幕 — 小学</div>
+          <h3 data-page-node-id="kNqXLzl9GxlnP00cUItxkG">游戏MOD少年</h3>
+          <p data-page-node-id="TmqKb0AREqM59T1TOEAO94">别人玩游戏，我<b data-page-node-id="0s0FRQ5qFD7lXD3visEo7G">折腾游戏</b>：上网找补丁、装MOD、管理网盘资源。第一次体验到“自己找到工具、自己跑通”的快感——这个循环后来跟了我十几年。</p>
+        </div>
+        <div class="act reveal" data-page-node-id="xCaMtgRsiVk7fuXR26clx2">
+          <div class="act-no" data-page-node-id="RQbzvclj1QDKYY28014mkc">第二幕 — 大学</div>
+          <h3 data-page-node-id="2zAHBV5SdJYWihxfKbXWBM">三个运营现场</h3>
+          <p data-page-node-id="zDDIJElvvEXRKTatuBam39">胖东来的卖场台账、立讯的产线、银行的厅堂。三段实习横跨零售、制造、金融，但我发现自己在每段经历里都会不自觉地做同一件事：<b data-page-node-id="5Wvuqiuxkj5WCnfeppZ6Oo">盯着重复的劳动，想办法让它更快更稳</b>。</p>
+        </div>
+        <div class="act reveal" data-page-node-id="HW7UCKHLLFFyDJvnimejVv">
+          <div class="act-no" data-page-node-id="BBumb1qEKJQQZTSBJBHtxR">第三幕 — 现在</div>
+          <h3 data-page-node-id="UPilKwHYuIQRN1lt9TzGHs">把AI当杠杆</h3>
+          <p data-page-node-id="EtHz0kA1XYM2zVFquDjhw0">求职季投出200多份简历，也让我重新盘点了自己：卷传统运营岗，我没有科班优势；但我手里有别人没有的东西——<b data-page-node-id="hoUHuzDYgvLEXrGT3fhqhn">十几年折腾工具的习惯 × 三个现场的真实运营经验</b>。AI正好是这两条线的交汇点。所以我选择AI运营，不是退而求其次，是主动选了胜算最大的路。</p>
+        </div>
+
+        <div class="about-quote reveal" data-page-node-id="UT9rW0LByJCXH0q90qCHDB">"我不是最近才开始折腾AI的人，<br data-page-node-id="U99lvBO9lwiDg0kfcK6ctp">我是折腾了十几年工具、终于等来AI时代的人。"</div>
+
+        <div class="trait-grid" data-page-node-id="3q0DLJLgaJJCOobR7ppsMs">
+          <div class="trait reveal" data-page-node-id="L3iD4m8DlksqjN7BIpPb6L">
+            <div class="t-ico" data-page-node-id="Mq0BBizDIAppZxqhRM2nao">🧭</div>
+            <h4 data-page-node-id="hzf5nSR1IvKmVYurd2Yn1v">探索者</h4>
+            <p data-page-node-id="34Gvoz5UDGrjZD7MTR5zcs">GitHub常客。自装 DeepSeek Harness、Computer Use、仓颉Skill、FlyingMouse——先跑通，再谈用。</p>
+          </div>
+          <div class="trait reveal" data-page-node-id="ZJvE9LzYLpQLDtXnF2XMCW">
+            <div class="t-ico" data-page-node-id="cVKYXFhBDyUGxUOD4GyOLf">🏃</div>
+            <h4 data-page-node-id="5RNJ6nJcIE8j0ODTuDGSAs">长期主义者</h4>
+            <p data-page-node-id="PC2NjpbT95VN5LBlk2Yxjx">大一到大二，<b data-page-node-id="sLwhpJ6YLn75kttCwPpnrG">每晚5公里</b>，两年不间断。相信复利的不止是配速。</p>
+          </div>
+          <div class="trait reveal" data-page-node-id="7cERSj4M4SOB6umItInHXq">
+            <div class="t-ico" data-page-node-id="H8YmDRkDEm0bV0bgwYHTAT">🎯</div>
+            <h4 data-page-node-id="vizxIrwiCmYnj2jX9hZ91Q">把曲线爬到顶</h4>
+            <p data-page-node-id="WhXrqsQThRpKB0uLME8MPP">永劫无间：<b data-page-node-id="Ysid2UVWUz8xvf8Ys6shub">国服高校榜第80名</b>（宁红叶），最高段位无双修罗 5874 分。陡峭的学习曲线，我能爬到顶尖。</p>
+          </div>
+        </div>
+
+        <div class="trait reveal" style="margin-bottom:44px;border-color:var(--accent);background:var(--accent-soft);" data-page-node-id="4QpJvxQkO8oyRCBu2D5djH">
+          <h4 style="margin-top:0;" data-page-node-id="yzkfad79q9a6nCrFGc8rrF">附：我把自己的求职当成了一个运营项目</h4>
+          <p style="font-size:14px;" data-page-node-id="aB0fBYVQvYY9w5nOMdataM">市场调研（分析岗位JD）→ 产品迭代（AI辅助定制简历 <b data-page-node-id="1yHGNfPHLKwAtsl349dyO3">8</b> 版）→ 转化漏斗（<b data-page-node-id="qGDYYB1WzYWz2p96Tz9R1X">200+</b> 投递 → <b data-page-node-id="AS7pa6FYcEnwkHIjspaGmK">7</b> 场面试）→ 持续复盘优化。你在看的这个网站，就是最新一版迭代。</p>
+        </div>
+
+        <div class="skill-grid" data-page-node-id="GcHTRg8JS8ptIiITxepylU">
+          <div class="skill-col reveal" data-page-node-id="S1eGx79FvxwAU6nFun9u8s">
+            <h4 data-page-node-id="0RorNqe3999sstPTCCRvEW">AI TOOLBOX — AI工具</h4>
+            <ul data-page-node-id="edER34iA2cWBwr4ppAbgxw">
+              <li data-page-node-id="OesBNSeTbvDUj12iDvBmiB">DeepSeek / 豆包 <span data-page-node-id="ozsavIgXFWoAH2UYxkayA6">日常生产力</span></li>
+              <li data-page-node-id="GK4Q41XHjy3BrnfeO7YMX7">即梦 Seedance <span data-page-node-id="c2CkBulSqr4NXfj7GBzcXj">AI视频创作</span></li>
+              <li data-page-node-id="PEIXyZJCpT3VfEF7IPGCqh">DeepSeek Harness · Agent Skill <span data-page-node-id="2VBuFUFowyO6Gy2qf6rA4S">智能体工作台</span></li>
+              <li data-page-node-id="dqueVzBrAExp5bAMXGlQgM">提示词工程 <span data-page-node-id="fQzAyCq3btsnQ2iAjQdsM0">分镜级 / 任务级</span></li>
+              <li data-page-node-id="QubVEeCDHK4Gop56djU3vE">GitHub 工具探索 <span data-page-node-id="lwpRbj6BUeyv3DQhj9BmRg">找到→装上→跑通</span></li>
+            </ul>
+          </div>
+          <div class="skill-col reveal" data-page-node-id="BVN3MYvqwPB1MLhSSykcLm">
+            <h4 data-page-node-id="zsKMGgskQg6ZRWwHKRL0wz">DATA — 数据能力</h4>
+            <ul data-page-node-id="YnoC2uEydhtbd23bQCTEmX">
+              <li data-page-node-id="P8NlW69nHnE8fUxJ2hGXLC">Excel <span data-page-node-id="kZvKhA0VtaFXeFaKNLHZUo">透视表 / VLOOKUP / 函数</span></li>
+              <li data-page-node-id="rRqoBDxC9d0oDUPCafYVPj">SQL <span data-page-node-id="8XxRx9CHhIluQfGPCGzwEv">基础，快速学习中</span></li>
+              <li data-page-node-id="fssKPhZqgcgY6c0A2m03Wv">数据台账体系 <span data-page-node-id="Jk0JPg8tTqn6M8ELqINPVc">动销 / 检验 / 客户分层</span></li>
+              <li data-page-node-id="Au3Eq1miyG4Qq4W7Wqum1S">广联达 <span data-page-node-id="G8xvXqxHRcFO2yBoGNMnVT">工程量统计与算量</span></li>
+            </ul>
+          </div>
+          <div class="skill-col reveal" data-page-node-id="xYNKra2joH0z9hiTGaw9WG">
+            <h4 data-page-node-id="j2PImnxFFAHHRR7n6ff4YC">PLATFORM — 平台运营</h4>
+            <ul data-page-node-id="nzQeSPLpZEn8oEZYkWEk28">
+              <li data-page-node-id="z2dcEkAuyff4AkxgBm9gXC">抖音 <span data-page-node-id="ogdWWIns4VJ2Os9eWKQHPv">推流机制 / 标签 / 抖加投流</span></li>
+              <li data-page-node-id="vCihACeBlbt1JeUgWVGkHI">小红书 <span data-page-node-id="dMFisOEo2BlE9URkqbVlQU">平台逻辑</span></li>
+              <li data-page-node-id="nMmF3XQSx2ypVuu52qd3cw">微信公众号 <span data-page-node-id="F2a8pqefiBwBzj74hbVA0K">平台逻辑</span></li>
+              <li data-page-node-id="1mptCsL9SGG3OQjESLZzfq">内容策略 <span data-page-node-id="pQXW1yqJNCcfvfSmGVKSlT">热点 / 共鸣 / 猎奇 / 幽默</span></li>
+            </ul>
+          </div>
+          <div class="skill-col reveal" data-page-node-id="hlMOP0QRJA0nuIfuhIHnmc">
+            <h4 data-page-node-id="JA7h0H38ymkc37Uq4zlEZ5">CORE — 通用素养</h4>
+            <ul data-page-node-id="hO0PpksPa8K3boKPHADK7M">
+              <li data-page-node-id="DKbGDsuEMnom4A6ZrPxalO">现场执行 <span data-page-node-id="0ERofpLVFCiIO4RIGwb88g">活动 / 厅堂 / 产线</span></li>
+              <li data-page-node-id="oMnTr2wOKJrGaVyEkL4b8m">客户沟通与应急处理 <span data-page-node-id="emCK6fGiOtsyOlPyPkwirN">客诉闭环实战</span></li>
+              <li data-page-node-id="6NMAUGGbZvQ4jnRq52y1DW">方案撰写与汇报 <span data-page-node-id="DXZVV7McqKu7Gz6RqmcWvU">Word / PPT / 20万字文档</span></li>
+              <li data-page-node-id="VwuCnAmKlcbyCOAObKCt4c">英语 CET-4 / 普通话 / 机动车驾驶证 <span data-page-node-id="lW7EJmgvXMUrY3RNdvmCto">证书</span></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact" id="contact" data-page-node-id="HUb9vMrATonNTFO9Nhs9sf">
+  <div class="wrap" data-page-node-id="FDYzFmiIvy6giFVXoXi6cF">
+    <div class="sec-head reveal" style="margin-bottom:20px;" data-page-node-id="aDPvhmbzpyVqz4kCUrydEL">
+      <div class="sec-tag" data-page-node-id="GSgg84L3pkzvZT8xUj59Lc">04 — CONTACT</div>
+      <h2 class="sec-title" style="color:var(--dark-ink);" data-page-node-id="JD1Q4ykxZp1oU1uuDGEHRQ">聊聊？</h2>
+      <p class="sec-desc" style="color:rgba(241,237,228,.65);" data-page-node-id="YHBvT1DmhfINkvm17G7M5x">正在寻找 AI 运营及其他 AI 相关岗位的机会——AI产品运营、内容运营、用户运营、AI工具与内容策划均可。2027届，可实习至毕业。</p>
+    </div>
+    <div class="contact-grid" data-page-node-id="obhv8gSM7jqbBacglRNCBt">
+      <div class="contact-lines reveal" data-page-node-id="Kn5UnNtH6TF51xaRO6aw69">
+        <div class="cline" data-page-node-id="z3uGPHVJXwilFaEdadJeFL"><span class="k" data-page-node-id="QpeApDPfoCJQn7zA9zLzUI">PHONE</span><span class="v" data-page-node-id="7zLnEFiHmqwu2trqC139nP">176 0388 1955</span></div>
+        <div class="cline" data-page-node-id="3OO81EDI3jB4thaU42DCGe"><span class="k" data-page-node-id="Cc7qCrwNWEmI7zBakDM0MZ">EMAIL</span><span class="v" data-page-node-id="GRwDaobrbFxiTcD0mEJmaO">1391532825@qq.com</span></div>
+        <div class="cline" data-page-node-id="Uhwa8WwAOBb13Sqit1tCCL"><span class="k" data-page-node-id="vMMbcws5MzmBIlJTMwSkhb">抖音</span><span class="v" data-page-node-id="eE7Uwf52FpyK6F8wrYNj3w">万钧 <small data-page-node-id="Xtvq9kDEnDoX2gGveXVfiY">抖音号 45012739858 · 游戏内容账号</small></span></div>
+        <div class="cline" data-page-node-id="EccMD5ibwo3yPOFt9aDt0V"><span class="k" data-page-node-id="iP4BA7CC5tlcVGyHMEPbnZ">BASE</span><span class="v" data-page-node-id="VflrBTVcxFEFv4yZ1fYdni">河南 · 郑州 <small data-page-node-id="h4uHd73CBpMhkahctq9WMd">随时到岗</small></span></div>
+      </div>
+      <div class="contact-side reveal" data-page-node-id="ZnjkQwhyLDWuQmrTPSEZAc">
+        <h4 data-page-node-id="3JDYQW0ifaAVIXQ5fQe72O">为什么值得聊</h4>
+        <p data-page-node-id="yKH0w51Y5oNFmUShcIXrIE">· 有真实运营现场：银行厅堂的用户分层、胖东来的陈列转化、立讯的流程改进；</p>
+        <p data-page-node-id="OfeDWWUNQnBEFbL0cCkuNO">· 有跑通的AI证据链：智能体工作台、提示词工程、AI提效的量化结果；</p>
+        <p data-page-node-id="Zl2MQ8FpsNX5cuPLtLBXRl">· 有内容成绩：4条万播视频，最高7.8万播放，懂平台机制。</p>
+        <p style="margin-top:16px;font-weight:700;color:#F2A488;" data-page-node-id="E7zOAsYJL6C3XobC4QuOhg">工具我会装，数据我会看，现场我待过。剩下的一切，我可以学得很快。</p>
+      </div>
+    </div>
+
+    <!-- ===== 留言板（云服务 · 真实持久化） ===== -->
+    <div class="board reveal" id="board" data-page-node-id="v4o018vNhlY2gCA9j9pyB5">
+      <div class="board-head" data-page-node-id="ZG5VlCWLcGdAUUYdPL5wLn">
+        <h4 data-page-node-id="mBphV69BRXplDcUoRH0kQa">给我留句话</h4>
+        <span class="board-note" data-page-node-id="gm0PzgxakEOIHAY5Ers0RS">MESSAGE BOARD · 云端存储</span>
+      </div>
+      <p style="font-size:13.5px;color:var(--ink-soft);margin-top:8px;" data-page-node-id="ESXMMctc5cS6ZQRSQopGib">
+        招聘方、同行或任何看过这个网站的人，都可以在这里留一句话。留言会真实保存到云端。
+      </p>
+
+      <form class="board-form" id="boardForm" data-page-node-id="z2LvdFArJu9N4QWotXZl8m">
+        <div data-page-node-id="yi6dclVUj0g0HP9xsnSkDR">
+          <label for="bmName" data-page-node-id="8koWE7kArhe4IDzWE392vc">你的称呼</label>
+          <input id="bmName" type="text" maxlength="24" placeholder="如：张经理 / 面试官“ autocomplete=”name" data-page-node-id="hOy2UvMuNyKm8UaFuLJDBt">
+        </div>
+        <div data-page-node-id="n7JmXdu9NpPmfSBP7i1Xmk">
+          <label for="bmRole" data-page-node-id="YNiXkPbGYSjxPMxAfctcBH">你的身份（可选）</label>
+          <select id="bmRole" data-page-node-id="kj1A0fRsWANiO7Z92wCfeB">
+            <option value="" data-page-node-id="PdKydeV3HOH6ATIvE6gUQ2">不填</option>
+            <option value="HR" data-page-node-id="bXJjh9G6bjAkntDllOFol8">招聘方 / HR</option>
+            <option value="面试官“ data-page-node-id=”Q1HC4SSSyfWwcAZUrfnHnj">面试官</option>
+            <option value="同行“ data-page-node-id=”j1NH83gCOMABZA5oIvIdRs">同行 / 运营人</option>
+            <option value="学长学姐“ data-page-node-id=”IluBYNkJOY2OFmYABimuTC">学长学姐</option>
+            <option value="朋友“ data-page-node-id=”0ENvFIdRtBuMtzC7VcLB68">朋友</option>
+          </select>
+        </div>
+        <div class="full" data-page-node-id="SkiYIWCQc6RFjYGvhFfsUg">
+          <label for="bmContent" data-page-node-id="ysg26iYom7hCXzwAVjpobH">留言内容</label>
+          <textarea id="bmContent" maxlength="300" placeholder="想说的话，300字以内（支持换行）"></textarea>
+        </div>
+        <div class="board-actions" data-page-node-id="jVcDRbXokBzQXxeVWEtGxy">
+          <button class="btn btn-primary" type="submit" id="bmSubmit" data-page-node-id="F2hXdBWD4PLBHy51nUjftl">发布留言</button>
+          <span class="board-msg" id="bmMsg" data-page-node-id="1SuJ7M4md5DO6x56qhTnDs"></span>
+        </div>
+        <div class="board-id" id="bmIdentity" data-page-node-id="NOnckpNiwQuZLTcHIWp1eX"><span>未登录也可以留言（匿名发布）。想管理自己的留言，可用邮箱或手机号登录。</span></div>
+      </form>
+
+      <div class="board-list" data-page-node-id="DRGx0q1OnF5qyBN49eYEsy">
+        <h5 data-page-node-id="DpP7LXP9Irqe89Ol3SId6v">留言 · <span id="bmCount" data-page-node-id="7mlvKojz8qAXE2ffq0Ex6d">1 条</span></h5>
+        <div id="bmList" data-page-node-id="HpcL1rmSrC52MeZGiHBHNQ"><article class="msg-item" data-id="3">
+        <div class="msg-meta">
+          <span class="msg-name">站点自检</span>
+          <span class="msg-role">朋友</span>
+          <span class="msg-time">2026.10.07 13:42</span>
+        </div>
+        <div class="msg-body">云服务已接入：这条留言保存在云端数据库，刷新页面依然可见。</div>
+        
+      </article></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer data-page-node-id="Etj82Gtg2SvFIqqL8VMBoq">
+  <div class="wrap foot-inner" data-page-node-id="DAFvovJZk3OglX4Gt7Rprh">
+    <span data-page-node-id="Le735rN0ywefdv7nqVOz0S">© 2026 黄鑫浩 · 个人作品集</span>
+    <span class="mono" data-page-node-id="3Mx7foikObsPJbOMu1X7uo">DESIGNED &amp; BUILT BY ME + AI — 这本身就是我工作方式的证明</span>
+    <span class="mono" data-page-node-id="k2J3b8ogaIgQ0dtQDjgVWm">UPDATED 2026.10</span>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js"></script>
+<script>
+  /* =====================================================================
+     留言板 · 云服务接入
+     配置来自 workbuddy_cloud_service 返回的 publicConfig（发布域名同源）
+     ===================================================================== */
+  const PUBLIC_CONFIG = {
+    endpoint: 'https://huangxinhao-portfolio.app.workbuddy.host',
+    oauthRelayBaseUrl: 'https://www.workbuddy.cn/v2/as/genie-baas/oauth',
+    publishableKey: 'wbpk_SEFzfAoWFz2qQkY9jv6RnY_7COV5Hoox6dwHuhBOC0LZc3t5YmRGciN',
+  };
+
+  let cloud = null;
+  try {
+    cloud = WorkBuddyCloud.createWorkBuddyCloud({
+      endpoint: PUBLIC_CONFIG.endpoint,
+      oauthRelayBaseUrl: PUBLIC_CONFIG.oauthRelayBaseUrl,
+      publishableKey: PUBLIC_CONFIG.publishableKey,
+    });
+  } catch (e) {
+    console.error('[board] cloud init failed', e && e.message);
+  }
+
+  const TABLE = 'guest_messages';
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => (
+    { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+  ));
+
+  function say(text, isErr) {
+    const el = $('bmMsg');
+    if (!el) return;
+    el.textContent = text || '';
+    el.classList.toggle('err', !!isErr);
+  }
+
+  function fmtTime(iso) {
+    if (!iso) return '';
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return '';
+    const p = (n) => String(n).padStart(2, '0');
+    return `${d.getFullYear()}.${p(d.getMonth() + 1)}.${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+  }
+
+  async function renderIdentity() {
+    const box = $('bmIdentity');
+    if (!box || !cloud) return;
+    const { data: session } = await cloud.auth.getSession();
+    if (session && session.user) {
+      const u = session.user;
+      box.hidden = false;
+      box.innerHTML = `<span>已登录：<b>${esc(u.email || u.phoneNumber || u.name || '当前账号')}</b>，你的留言会绑定到这个账号，可自行删除。</span>
+        <button class="btn btn-ghost" type="button" id="bmSignOut" style="padding:6px 14px;font-size:12.5px;">退出登录</button>`;
+      const so = $('bmSignOut');
+      if (so) so.addEventListener('click', async () => {
+        await cloud.auth.signOut();
+        say('已退出登录');
+        await renderIdentity();
+        await loadMessages();
+      });
+    } else {
+      box.hidden = false;
+      box.innerHTML = '<span>未登录也可以留言（匿名发布）。想管理自己的留言，可用邮箱或手机号登录。</span>';
+    }
+  }
+
+  async function loadMessages() {
+    const list = $('bmList');
+    if (!list) return;
+    if (!cloud) {
+      list.innerHTML = '<div class="board-empty">留言板需要联网加载（云服务连接失败）。</div>';
+      return;
+    }
+    const { data, error } = await cloud.database
+      .from(TABLE)
+      .select('id, author_name, role_hint, content, created_at, owner_id')
+      .order('created_at', { ascending: false })
+      .limit(50);
+
+    if (error) {
+      list.innerHTML = `<div class="board-empty">留言加载失败：${esc(error.message || '未知错误')}</div>`;
+      return;
+    }
+    const rows = Array.isArray(data) ? data : [];
+    const cnt = $('bmCount');
+    if (cnt) cnt.textContent = rows.length + ' 条';
+
+    if (!rows.length) {
+      list.innerHTML = '<div class="board-empty">还没有留言，你可以成为第一个。</div>';
+      return;
+    }
+
+    const { data: session } = await cloud.auth.getSession();
+    const myUid = session && session.user ? session.user.id : null;
+
+    list.innerHTML = rows.map((r) => {
+      const mine = myUid && r.owner_id === myUid;
+      return `<article class="msg-item" data-id="${esc(r.id)}">
+        <div class="msg-meta">
+          <span class="msg-name">${esc(r.author_name || '匿名访客')}</span>
+          ${r.role_hint ? `<span class="msg-role">${esc(r.role_hint)}</span>` : ''}
+          <span class="msg-time">${esc(fmtTime(r.created_at))}</span>
+        </div>
+        <div class="msg-body">${esc(r.content)}</div>
+        ${mine ? `<button class="msg-del" data-del="${esc(r.id)}" type="button">删除这条留言</button>` : ''}
+      </article>`;
+    }).join('');
+
+    list.querySelectorAll('[data-del]').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const id = btn.getAttribute('data-del');
+        btn.disabled = true;
+        const { data: del, error: derr } = await cloud.database
+          .from(TABLE).delete().eq('id', id).select();
+        if (derr) {
+          say('删除失败：' + (derr.message || '未知错误'), true);
+          btn.disabled = false;
+          return;
+        }
+        if (!Array.isArray(del) || del.length === 0) {
+          say('这条留言不属于当前账号，无法删除。', true);
+          btn.disabled = false;
+          return;
+        }
+        say('已删除');
+        await loadMessages();
+      });
+    });
+  }
+
+  async function submitMessage(ev) {
+    ev.preventDefault();
+    if (!cloud) { say('云服务连接失败，请检查网络后刷新重试。', true); return; }
+    const nameEl = $('bmName'), roleEl = $('bmRole'), contentEl = $('bmContent'), btn = $('bmSubmit');
+    const content = (contentEl.value || '').trim();
+    if (content.length < 2) { say('留言内容太短了，至少写 2 个字。', true); contentEl.focus(); return; }
+    if (content.length > 300) { say('留言内容请控制在 300 字以内。', true); return; }
+
+    btn.disabled = true;
+    say('正在发布…');
+    // 注意：不发送 owner_id —— 由数据库 DEFAULT auth.uid() 自动填写
+    const { data, error } = await cloud.database
+      .from(TABLE)
+      .insert({
+        author_name: (nameEl.value || '').trim().slice(0, 24) || '匿名访客',
+        role_hint: roleEl.value || null,
+        content,
+      })
+      .select();
+
+    btn.disabled = false;
+
+    if (error) {
+      if (error.code === '42501') say('当前身份没有发布权限，请刷新页面后重试。', true);
+      else if (error.code === '42P01') say('留言板数据表尚未就绪，请联系站长。', true);
+      else say('发布失败：' + (error.message || '未知错误'), true);
+      return;
+    }
+    if (!Array.isArray(data) || data.length === 0) {
+      say('发布未生效：可能未登录或权限不足。', true);
+      return;
+    }
+    contentEl.value = '';
+    say('发布成功，谢谢你的留言 ✓');
+    await loadMessages();
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    const form = $('boardForm');
+    if (form) form.addEventListener('submit', submitMessage);
+    await renderIdentity();
+    await loadMessages();
+  });
+</script>
+<script>
+  // nav shadow
+  const nav=document.getElementById('nav');
+  window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>10);},{passive:true});
+  // reveal on scroll
+  const io=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+
+
+</body></html>

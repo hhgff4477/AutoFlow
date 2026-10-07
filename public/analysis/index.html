@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>内容结构分析报告 · 该主打哪类资讯 · 黄鑫浩</title>
+<meta name="description" content="基于 58 条真实科技资讯的分类分析：用跨源覆盖度替代拿不到的转发数据，得出可执行的内容运营结论。">
+<style>
+  :root{
+    --bg:#F6F3ED; --paper:#FCFAF6; --card-alt:#EFEBE2;
+    --ink:#1C1A17; --ink-soft:#5B564C; --line:#DAD4C8;
+    --accent:#D9481F; --accent-soft:#F4DCD2;
+    --dark:#211E19; --dark-ink:#F1EDE4;
+    --mono:"JetBrains Mono","Cascadia Mono",Consolas,"Courier New",monospace;
+    --sans:-apple-system,"PingFang SC","HarmonyOS Sans SC","Microsoft YaHei","Source Han Sans SC",sans-serif;
+    --c-tool:#185FA5; --c-opinion:#993C1D; --c-funding:#3B6D11; --c-research:#534AB7; --c-other:#5F5E5A;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7;
+       -webkit-font-smoothing:antialiased;font-size:15px;}
+  .mono{font-family:var(--mono);}
+  a{color:inherit;}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- 头部 ---------- */
+  header{padding:56px 0 30px;border-bottom:1px solid var(--line);}
+  .kicker{font-family:var(--mono);font-size:12px;letter-spacing:.2em;color:var(--accent);
+          text-transform:uppercase;margin-bottom:14px;}
+  h1{font-size:31px;line-height:1.35;font-weight:800;letter-spacing:-.01em;}
+  h1 em{font-style:normal;color:var(--accent);}
+  .lede{margin-top:16px;color:var(--ink-soft);font-size:15.5px;max-width:760px;}
+  .back{margin-bottom:20px;font-family:var(--mono);font-size:12px;letter-spacing:.06em;}
+  .back a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(217,72,31,.35);padding-bottom:1px;}
+  .meta-row{display:flex;flex-wrap:wrap;gap:26px;margin-top:24px;
+            font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);}
+  .meta-row b{color:var(--ink);font-size:15px;}
+
+  /* ---------- 区块 ---------- */
+  section{padding:44px 0;border-bottom:1px solid var(--line);}
+  section:last-of-type{border-bottom:none;}
+  .sec-no{font-family:var(--mono);font-size:12px;letter-spacing:.18em;color:var(--accent);margin-bottom:8px;}
+  h2{font-size:23px;font-weight:800;letter-spacing:-.01em;margin-bottom:8px;}
+  .sec-sub{color:var(--ink-soft);font-size:14.5px;margin-bottom:26px;max-width:780px;}
+
+  /* ---------- 结论卡 ---------- */
+  .verdict{background:var(--dark);color:var(--dark-ink);border-radius:10px;padding:30px 32px;margin-bottom:8px;}
+  .verdict .tag-line{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;
+                     color:#F2A488;margin-bottom:14px;}
+  .verdict p{font-size:15.5px;line-height:1.85;color:#DED8CC;margin-bottom:12px;}
+  .verdict p:last-child{margin-bottom:0;}
+  .verdict b{color:#fff;font-weight:700;}
+  .verdict .hl{color:#F2A488;font-weight:700;}
+
+  /* ---------- 方法说明 ---------- */
+  .method-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px;}
+  .mcard{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:18px 18px 16px;}
+  .mcard .mn{font-family:var(--mono);font-size:11px;color:var(--accent);letter-spacing:.14em;margin-bottom:8px;}
+  .mcard h4{font-size:14.5px;font-weight:700;margin-bottom:7px;}
+  .mcard p{font-size:13px;color:var(--ink-soft);line-height:1.65;}
+  .warn{background:var(--accent-soft);border-left:3px solid var(--accent);
+        border-radius:0 6px 6px 0;padding:14px 18px;font-size:13.5px;color:#7A2E12;line-height:1.7;}
+
+  /* ---------- 环形图 ---------- */
+  .donut-row{display:grid;grid-template-columns:280px 1fr;gap:38px;align-items:center;}
+  .donut-legend{display:flex;flex-direction:column;gap:11px;}
+  .lg{display:grid;grid-template-columns:14px 1fr auto;gap:11px;align-items:center;font-size:14px;}
+  .lg .dot{width:11px;height:11px;border-radius:3px;}
+  .lg .nm{font-weight:600;}
+  .lg .vl{font-family:var(--mono);font-size:12.5px;color:var(--ink-soft);}
+  .lg .vl b{color:var(--ink);font-size:14px;}
+
+  /* ---------- 覆盖度（四象限） ---------- */
+  .quad-note{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:22px;}
+  .qn{border:1px solid var(--line);border-radius:8px;padding:15px 17px;background:var(--paper);}
+  .qn .h{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+  .qn .pill{font-family:var(--mono);font-size:10.5px;padding:2px 7px;border-radius:3px;
+            background:var(--card-alt);color:var(--ink-soft);letter-spacing:.06em;}
+  .qn h5{font-size:14px;font-weight:700;}
+  .qn p{font-size:12.5px;color:var(--ink-soft);line-height:1.6;}
+
+  /* ---------- 冷门区 ---------- */
+  .cold{margin-top:24px;border:1px solid var(--line);border-radius:8px;background:var(--paper);padding:20px 22px;}
+  .cold h4{font-size:15px;font-weight:700;margin-bottom:4px;}
+  .cold .sub{font-size:12.5px;color:var(--ink-soft);margin-bottom:14px;}
+  .cold .row{display:grid;grid-template-columns:96px 1fr;gap:14px;align-items:baseline;
+             padding:9px 0;border-top:1px solid #EDE8DE;font-size:13.5px;}
+  .cold .row:first-of-type{border-top:none;}
+  .cold .nm{font-weight:700;}
+  .cold .tx{color:var(--ink-soft);font-size:13px;line-height:1.65;}
+  .cold .tx b{color:var(--ink);}
+  .cold .caveat{margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);
+                font-size:12px;color:#8B8578;line-height:1.65;}
+
+  /* ---------- 矩阵表 ---------- */
+  .mx{width:100%;border-collapse:collapse;font-size:13.5px;}
+  .mx th{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-soft);
+         text-align:center;padding:9px 6px;border-bottom:1px solid var(--line);font-weight:500;}
+  .mx th:first-child{text-align:left;}
+  .mx td{padding:10px 6px;border-bottom:1px solid #EDE8DE;text-align:center;}
+  .mx td:first-child{text-align:left;font-weight:600;white-space:nowrap;}
+  .mx .cell{display:inline-flex;align-items:center;justify-content:center;
+            min-width:34px;height:26px;border-radius:5px;font-family:var(--mono);
+            font-size:12.5px;font-weight:700;}
+  .mx .z{color:#C9C2B4;font-weight:400;}
+  .mx .tot{font-family:var(--mono);font-weight:700;color:var(--ink-soft);}
+
+  /* ---------- 明细 ---------- */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .item{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:15px 17px;}
+  .item .top{display:flex;align-items:center;gap:9px;margin-bottom:8px;flex-wrap:wrap;}
+  .chip{font-family:var(--mono);font-size:10.5px;padding:2.5px 8px;border-radius:3px;
+        letter-spacing:.04em;font-weight:600;}
+  .item .src{font-size:11.5px;color:var(--ink-soft);font-family:var(--mono);}
+  .item h5{font-size:14px;font-weight:700;line-height:1.5;margin-bottom:7px;}
+  .item h5 a{text-decoration:none;border-bottom:1px solid transparent;}
+  .item h5 a:hover{border-bottom-color:var(--accent);color:var(--accent);}
+  .item .why{font-size:12.5px;color:var(--ink-soft);line-height:1.6;}
+
+  footer{padding:34px 0 56px;font-size:12.5px;color:var(--ink-soft);}
+  footer b{color:var(--ink);}
+
+  @media (max-width:820px){
+    .donut-row{grid-template-columns:1fr;gap:24px;}
+    .method-grid,.quad-note,.grid2{grid-template-columns:1fr;}
+    h1{font-size:25px;}
+    .donut-row svg{max-width:260px;margin:0 auto;}
+  }
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <p class="back"><a href="/">← 返回作品集</a></p>
+  <div class="kicker">Content Structure Analysis</div>
+  <h1>AI 资讯没人给转发数据，那我就用<em>能算的东西</em>回答同一个问题</h1>
+  <p class="lede">我想知道「如果运营一个科技资讯账号该主打哪类内容」，但 RSS 里没有阅读量和转发数。于是换了一个可算的口径：<b>看一类内容被多少个独立来源同时报道</b>——被越多源追着写的话题，就是行业真正在关注的方向。样本取自 5 个科技媒体/社区，因此讨论范围是<b>泛科技资讯</b>而非纯 AI 领域。</p>
+  <div class="meta-row">
+    <span>样本量 <b id="m-total">—</b></span>
+    <span>覆盖来源 <b id="m-src">—</b></span>
+    <span>分类体系 <b>5 类</b></span>
+    <span>生成时间 <b id="m-time">—</b></span>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ========== 结论 ========== -->
+  <section id="s1">
+    <div class="sec-no">01 — CONCLUSION</div>
+    <h2>结论先说</h2>
+    <p class="sec-sub">下面每一条都来自后面的数据，不是预设的判断。</p>
+    <div class="verdict" id="verdict"></div>
+  </section>
+
+  <!-- ========== 方法 ========== -->
+  <section id="s2">
+    <div class="sec-no">02 — METHOD</div>
+    <h2>为什么这么算</h2>
+    <p class="sec-sub">先说清楚数据的边界，比给一个漂亮但站不住的结论重要。</p>
+    <div class="warn">
+      <b>数据边界：</b>RSS 源只提供标题、摘要和发布时间，<b>不含阅读量、转发数、点赞数</b>，公开源也不提供接口获取。所以“哪类转发高”这个问题，用这批数据<b>无法直接回答</b>——任何直接给出转发量的结论都是编的。
+    </div>
+    <div class="method-grid" style="margin-top:22px;">
+      <div class="mcard">
+        <div class="mn">指标 1</div>
+        <h4>结构占比</h4>
+        <p>某类条数 ÷ 总条数。回答“行业当前主要在产什么内容”。</p>
+      </div>
+      <div class="mcard">
+        <div class="mn">指标 2 · 核心</div>
+        <h4>跨源覆盖度</h4>
+        <p>报道过该类内容的源数 ÷ 总源数。<b>一个话题被越多独立来源同时写，说明行业越在追它</b>——这是在拿不到转发数据时，最接近“热度”的可算代理指标。</p>
+      </div>
+      <div class="mcard">
+        <div class="mn">指标 3</div>
+        <h4>源 × 类别矩阵</h4>
+        <p>每个源各类内容的分布。用于识别“某类内容集中在哪个源”，避免被条数多的源带偏整体判断。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== 图1 结构 ========== -->
+  <section id="s3">
+    <div class="sec-no">03 — DISTRIBUTION</div>
+    <h2>内容结构：谁在供给端占多数</h2>
+    <p class="sec-sub">全部 <span id="d-total">—</span> 条资讯按类别分布。<span id="d-note"></span></p>
+    <div class="donut-row">
+      <div id="donut"></div>
+      <div class="donut-legend" id="donut-legend"></div>
+    </div>
+  </section>
+
+  <!-- ========== 图2 覆盖度四象限 ========== -->
+  <section id="s4">
+    <div class="sec-no">04 — COVERAGE</div>
+    <h2>跨源覆盖度：哪些内容被多个源同时追踪</h2>
+    <p class="sec-sub">横轴是结构占比，纵轴是跨源覆盖度。两条中线取本样本的中位数——<b>样本变了，判断跟着变</b>，不是拍脑袋定的阈值。</p>
+    <div id="scatter"></div>
+    <div class="quad-note" id="quad-note"></div>
+    <div class="cold" id="cold"></div>
+  </section>
+
+  <!-- ========== 图3 矩阵 ========== -->
+  <section id="s5">
+    <div class="sec-no">05 — SOURCE MATRIX</div>
+    <h2>源 × 类别矩阵：谁在写什么</h2>
+    <p class="sec-sub">看某类内容是否只集中在个别源——如果集中，那它反映的是那家媒体的口味，不代表普遍需求。</p>
+    <div style="overflow-x:auto;"><table class="mx" id="matrix"></table></div>
+  </section>
+
+  <!-- ========== 明细 ========== -->
+  <section id="s6">
+    <div class="sec-no">06 — SAMPLES</div>
+    <h2>分类依据：每条为什么归到这一类</h2>
+    <p class="sec-sub">展示 AI 对每条资讯给出的归类理由，供核查——统计结论的可信度取决于这里的每一条是否合理。</p>
+    <div class="grid2" id="samples"></div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <p><b>黄鑫浩</b> · 本报告由自建的 AutoFlow 流水线产出：抓取公开信息源 → 大模型逐条分类 → <b>服务端代码统计</b>（比例不采信模型输出，保证可复算）。</p>
+  <p style="margin-top:6px;">数据来源：InfoQ·AI / 爱范儿 / 极客公园 / 少数派 / Hacker News 的公开 RSS。样本为泛科技资讯，非纯 AI 领域。</p>
+</footer>
+
+<script src="data.js"></script>
+<script>
+/* ================= 渲染逻辑 ================= */
+const TAGS = window.ANALYSIS.tags;
+const ITEMS = window.ANALYSIS.items;
+const TAG_BY = new Map(TAGS.map(t => [t.id, t]));
+const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c =>
+  ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+/* ---------- 统计（与 methodology.mjs 同一口径） ---------- */
+function analyze(items){
+  const total = items.length;
+  const sources = [...new Set(items.map(i => i.source))];
+  const byTag = new Map(TAGS.map(t => [t.id, {id:t.id,name:t.name,color:t.color,desc:t.desc,n:0,srcs:new Set()}]));
+  for (const it of items){
+    const k = byTag.has(it.tag) ? it.tag : 'other';
+    const r = byTag.get(k); r.n++; r.srcs.add(it.source);
+  }
+  const rows = TAGS.map(t => {
+    const r = byTag.get(t.id);
+    return {...r, srcs:[...r.srcs],
+      share: total ? r.n/total*100 : 0,
+      cover: sources.length ? r.srcs.size/sources.length*100 : 0};
+  });
+  const sourceRows = sources.map(s => {
+    const mine = items.filter(i => i.source === s);
+    return {source:s, total:mine.length,
+      cells: TAGS.map(t => ({...t, n: mine.filter(i => (byTag.has(i.tag)?i.tag:'other')===t.id).length}))};
+  }).sort((a,b)=>b.total-a.total);
+  return {total, srcCount:sources.length, rows, sourceRows};
+}
+
+function quadrants(rows){
+  const active = rows.filter(r => r.n>0 && r.id!=='other');
+  if(!active.length) return [];
+  /* 阈值用「均值」而不是中位数：
+   * 本样本只有 4 个类别，中位数取第 3 个会让阈值偏高，把大量类别误判进低区。
+   * 均值对少量数据点更稳健。覆盖度则固定用 50%（半数来源）作参照——
+   * 这个值有明确含义：“过半数来源都在报道”，比相对值更好解释。 */
+  const ms = active.reduce((s,r)=>s+r.share,0)/active.length;
+  const mc = 50;
+  return active.map(r => {
+    const hiS = r.share >= ms, hiC = r.cover >= mc;
+    let type, advice, q;
+    if(hiS&&hiC){type='共识型';q='共识';advice='供给充足且被多源共同关注。受众基数最大，但同质化最严重——必须叠加自己的实测或独特视角才能被记住。';}
+    else if(hiS&&!hiC){type='集中型';q='集中';advice='供给不算少，但只集中在少数来源，说明是某类媒体的偏好口味，不代表普遍需求。作为切入方向要谨慎。';}
+    else if(!hiS&&hiC){type='空位型';q='空位';advice='多个来源都在报道（需求已被验证），但供给量偏低——还没人把这件事做深。竞争最小、切入成本最低。';}
+    else {type='边缘型';q='边缘';advice='供给与关注度都低。除非有独特资源或视角，否则不建议作为主线。';}
+    return {...r, type, advice, q, midShare:ms, midCover:mc};
+  }).sort((a,b)=>b.share-a.share);
+}
+
+function verdictText(items, rows){
+  const q = quadrants(rows);
+  const gap = q.filter(r=>r.type==='空位型');
+  const con = q.filter(r=>r.type==='共识型');
+  const top = [...rows].filter(r=>r.id!=='other'&&r.n>0).sort((a,b)=>b.share-a.share)[0];
+  const srcN = new Set(items.map(i=>i.source)).size;
+  const out = [];
+  if(top) out.push(`样本共 <b>${items.length}</b> 条，覆盖 <b>${srcN}</b> 个来源。<b>供给端占比最高的是 ${top.name}</b>（${top.n} 条 · ${top.share.toFixed(0)}%），跨源覆盖度 ${top.cover.toFixed(0)}%。`);
+  if(con.length){
+    out.push(`<b>${con.map(c=>c.name).join('、')}</b> 落在“共识型”象限：供给多、关注度也高。受众基数最大，但正因人人都在做，<b>搬运型内容最难出头</b>——你发的和别人的几乎一样，观众没有必要记住你。`);
+  }
+  if(gap.length){
+    out.push(`真正有机会的是 <span class="hl">${gap.map(g=>g.name).join('、')}</span>，落在<b>"空位型"</b>：${gap.map(g=>`${g.srcs.length}/${srcN} 个来源（${g.cover.toFixed(0)}%）都在报道它`).join('，')}，但条数只占 ${gap.map(g=>g.share.toFixed(0)+'%').join('、')}。<b>需求已经被行业验证，供给却没跟上——不是没人看，是没人做深</b>。竞争最小、切入成本最低。`);
+  }
+  if(top){
+    const base = con.length ? con[0].name : top.name;
+    const wedge = gap.length ? gap.map(g=>g.name).join('、') : '尚未被做深的方向';
+    out.push(`<b>所以如果是我来运营一个科技资讯账号：</b>用 <b>${base}</b> 做基本盘——它产量最稳、受众最明确，能保证内容不断更；但把<b>差异化押在「${wedge}」上</b>，而且必须用“自己上手试过”的具体视角去写，而不是再转一遍同类消息。`);
+    out.push(`<b>一句话结论：</b>不跟所有人抢最热的那一类，去占「${wedge}」里最该有人做、却还没人做深的那块。`);
+  }
+  return out;
+}
+
+/* ---------- 渲染 ---------- */
+const A = analyze(ITEMS);
+const Q = quadrants(A.rows);
+
+document.getElementById('m-total').textContent = A.total + ' 条';
+document.getElementById('m-src').textContent = A.srcCount + ' 个';
+document.getElementById('m-time').textContent = window.ANALYSIS.generatedAt || '—';
+document.getElementById('d-total').textContent = A.total;
+
+document.getElementById('verdict').innerHTML =
+  '<div class="tag-line">FINDING</div>' + verdictText(ITEMS, A.rows).map(t=>`<p>${t}</p>`).join('');
+
+/* --- 图1 环形图（纯 SVG） --- */
+(function(){
+  const rows = A.rows.filter(r=>r.n>0).sort((a,b)=>b.n-a.n);
+  const R = 92, SW = 30, C = 2*Math.PI*R;
+  let off = 0, segs = '';
+  for(const r of rows){
+    const frac = r.n / A.total;
+    const len = frac * C;
+    segs += `<circle cx="140" cy="140" r="${R}" fill="none" stroke="${r.color}" stroke-width="${SW}"
+      stroke-dasharray="${len} ${C-len}" stroke-dashoffset="${-off}"
+      transform="rotate(-90 140 140)"><title>${r.name} ${r.n} 条</title></circle>`;
+    off += len;
+  }
+  document.getElementById('donut').innerHTML = `
+    <svg viewBox="0 0 280 280" width="280" height="280" role="img" aria-label="内容类别占比环形图">
+      <circle cx="140" cy="140" r="${R}" fill="none" stroke="#EFEBE2" stroke-width="${SW}"/>
+      ${segs}
+      <text x="140" y="132" text-anchor="middle" font-family="var(--mono)" font-size="34" font-weight="700" fill="#1C1A17">${A.total}</text>
+      <text x="140" y="155" text-anchor="middle" font-family="var(--mono)" font-size="11" letter-spacing="1.6" fill="#5B564C">TOTAL ITEMS</text>
+    </svg>`;
+  document.getElementById('donut-legend').innerHTML = rows.map(r=>`
+    <div class="lg">
+      <span class="dot" style="background:${r.color}"></span>
+      <span class="nm">${r.name}</span>
+      <span class="vl"><b>${r.n}</b> 条 · ${r.share.toFixed(0)}% · 覆盖 ${r.srcs.length}/${A.srcCount} 源</span>
+    </div>`).join('');
+})();
+
+/* --- 图2 四象限散点（纯 SVG） --- */
+(function(){
+  if(!Q.length) return;
+  const W=880, H=420, P={l:64,r:36,t:30,b:56};
+  const iw=W-P.l-P.r, ih=H-P.t-P.b;
+  const ms=Q[0].midShare, mc=Q[0].midCover;
+  const maxS = Math.max(...Q.map(r=>r.share), ms*1.6) || 100;
+  // 覆盖度轴留一点余量：有类别达到 100% 时气泡会贴顶，视觉上被切掉
+  const maxC = 108;
+  const X = v => P.l + (v/maxS)*iw;
+  const Y = v => P.t + ih - (v/maxC)*ih;
+
+  let grid='';
+  for(let p=0;p<=100;p+=25){
+    const y=Y(p);
+    grid+=`<line x1="${P.l}" y1="${y}" x2="${W-P.r}" y2="${y}" stroke="#EDE8DE" stroke-width="1"/>
+           <text x="${P.l-10}" y="${y+4}" text-anchor="end" font-family="var(--mono)" font-size="10.5" fill="#8B8578">${p}%</text>`;
+  }
+  for(let p=0;p<=100;p+=20){
+    if(p>maxS) break;
+    const x=X(p);
+    grid+=`<line x1="${x}" y1="${P.t}" x2="${x}" y2="${P.t+ih}" stroke="#EDE8DE" stroke-width="1"/>
+           <text x="${x}" y="${P.t+ih+20}" text-anchor="middle" font-family="var(--mono)" font-size="10.5" fill="#8B8578">${p}%</text>`;
+  }
+
+  const mx=X(ms), my=Y(mc);
+  // 四象限底色 + 区域标注
+  // 标注放在各象限的“角落”，避开数据气泡（气泡集中在纵横轴上，
+  // 四角是最空的），并且加半透明白底保证可读。
+  const quads=`
+    <rect x="${P.l}" y="${P.t}" width="${mx-P.l}" height="${my-P.t}" fill="#EFEBE2" opacity=".45"/>
+    <rect x="${mx}" y="${P.t}" width="${W-P.r-mx}" height="${my-P.t}" fill="#F4DCD2" opacity=".5"/>
+    <rect x="${P.l}" y="${my}" width="${mx-P.l}" height="${P.t+ih-my}" fill="#F6F3ED" opacity=".6"/>
+    <rect x="${mx}" y="${my}" width="${W-P.r-mx}" height="${P.t+ih-my}" fill="#FDF2EC" opacity=".7"/>
+    <line x1="${mx}" y1="${P.t}" x2="${mx}" y2="${P.t+ih}" stroke="#C9C2B4" stroke-dasharray="4 4"/>
+    <line x1="${P.l}" y1="${my}" x2="${W-P.r}" y2="${my}" stroke="#C9C2B4" stroke-dasharray="4 4"/>
+    <text x="${P.l+9}" y="${P.t+16}" font-family="var(--mono)" font-size="10.5" fill="#8B8578">集中型 · 供给多·关注低</text>
+    <text x="${W-P.r-9}" y="${P.t+16}" text-anchor="end" font-family="var(--mono)" font-size="10.5" fill="#A8623E">共识型 · 供给多·关注高</text>
+    <text x="${P.l+9}" y="${P.t+ih-9}" font-family="var(--mono)" font-size="10.5" fill="#8B8578">边缘型 · 都低</text>
+    <rect x="${mx+6}" y="${P.t+ih-26}" width="${W-P.r-mx-12}" height="19" rx="4" fill="#D9481F" opacity=".1"/>
+    <text x="${W-P.r-9}" y="${P.t+ih-12}" text-anchor="end" font-family="var(--mono)" font-size="11" font-weight="700" fill="#D9481F">空位型 · 供给少·关注高 ← 机会</text>`;
+
+  // 气泡
+  let pts='';
+  const placed=[];
+  const nMax = Math.max(...Q.map(r=>r.n), 1);
+  for(const r of Q){
+    const x=X(r.share), y=Y(r.cover);
+    // 气泡尺寸：压缩量纲差异，避免大类的球吃掉整张图（半径限制在 11–20px）
+    const rad = 11 + Math.sqrt(r.n/nMax)*9;
+    pts+=`<circle cx="${x}" cy="${y}" r="${rad}" fill="${r.color}" opacity=".85" stroke="#FCFAF6" stroke-width="2.5">
+            <title>${r.name}：占比 ${r.share.toFixed(1)}% · 覆盖度 ${r.cover.toFixed(0)}% · ${r.n} 条</title></circle>`;
+
+    // 标签避让：先试上方，被占则下方；仍冲突则左/右平移。
+    // 同时做边界约束，避免文字跑出画布。
+    const w = r.name.length*13 + 12;   // 估个宽度用于避让判断
+    const cands = [
+      {lx:x, ly:y-rad-10},
+      {lx:x, ly:y+rad+18},
+      {lx:x-w/2-6, ly:y+5, anchor:'end'},
+      {lx:x+w/2+6, ly:y+5, anchor:'start'},
+    ];
+    let pick = cands[0];
+    for(const c of cands){
+      const clash = placed.some(p=>Math.abs(p.ly-c.ly)<22 && Math.abs(p.lx-c.lx)<(p.w+w)/2);
+      const inX = c.lx > P.l+10 && c.lx < W-P.r-10;
+      const inY = c.ly > P.t+14 && c.ly < P.t+ih-4;
+      if(!clash && inX && inY){ pick = c; break; }
+    }
+    placed.push({lx:pick.lx, ly:pick.ly, w});
+    const anchor = pick.anchor || 'middle';
+    pts+=`<text x="${pick.lx}" y="${pick.ly}" text-anchor="${anchor}" font-family="var(--sans)" font-size="13" font-weight="700" fill="#1C1A17">${r.name}</text>`;
+    pts+=`<text x="${pick.lx}" y="${pick.ly+14}" text-anchor="${anchor}" font-family="var(--mono)" font-size="10" fill="#8B8578">${r.type}</text>`;
+  }
+
+  document.getElementById('scatter').innerHTML=`
+    <svg viewBox="0 0 ${W} ${H}" width="100%" role="img" aria-label="结构占比与跨源覆盖度四象限图">
+      ${quads}${grid}${pts}
+      <text x="${P.l+iw/2}" y="${H-16}" text-anchor="middle" font-family="var(--mono)" font-size="11" letter-spacing="1.4" fill="#5B564C">结构占比（该类条数 ÷ 总条数）</text>
+      <text x="18" y="${P.t+ih/2}" text-anchor="middle" transform="rotate(-90 18 ${P.t+ih/2})" font-family="var(--mono)" font-size="11" letter-spacing="1.4" fill="#5B564C">跨源覆盖度（报道该类的源数 ÷ 总源数）</text>
+    </svg>`;
+
+  document.getElementById('quad-note').innerHTML = Q.map(r=>`
+    <div class="qn">
+      <div class="h"><span class="pill" style="color:${r.color}">${r.q}</span><h5>${r.name} · ${r.type}</h5></div>
+      <p>${r.advice}</p>
+    </div>`).join('');
+
+  /* --- "哪类没人看"：用低覆盖度 + 低占比推断，并明确标注这是推断 --- */
+  (function(){
+    const cold = Q.filter(r=>r.type==='边缘型'||r.type==='集中型');
+    const edge = Q.filter(r=>r.type==='边缘型');
+    const center = Q.filter(r=>r.type==='集中型');
+    let html = `<h4>"哪类没人看" —— 用同样口径反推</h4>
+      <div class="sub">没有人看的数据我们同样拿不到，但可以反过来推：<b>一个话题如果连行业媒体都很少写、且只有个别来源在写，它大概率也不是受众在追的</b>。</div>`;
+    if(edge.length) html += edge.map(r=>`<div class="row"><span class="nm">${r.name}</span><span class="tx">
+      <b>供给少（${r.share.toFixed(0)}%）且关注低（覆盖 ${r.srcs.length}/${A.srcCount} 源）</b>。${r.advice}</span></div>`).join('');
+    if(center.length) html += center.map(r=>`<div class="row"><span class="nm">${r.name}</span><span class="tx">
+      <b>看似有量（${r.share.toFixed(0)}%），但只集中在 ${r.srcs.length} 个源</b>。${r.advice}</span></div>`).join('');
+    if(!cold.length) html += `<div class="row"><span class="nm">—</span><span class="tx">本样本中没有出现明显的冷门类别，各类都获得了多个来源的报道。</span></div>`;
+    html += `<div class="caveat">⚠️ 说明：这是<b>基于供给侧的推断，不是直接的受众测量</b>。要真正验证“有没有人看”，需要在内容平台后台看阅读/完播数据——这也是我下一步要补的环节。</div>`;
+    document.getElementById('cold').innerHTML = html;
+  })();
+})();
+
+/* --- 图3 矩阵 --- */
+(function(){
+  const all = A.sourceRows;
+  const maxN = Math.max(...all.flatMap(s=>s.cells.map(c=>c.n)), 1);
+  let head = '<tr><th>来源</th>' + TAGS.map(t=>`<th>${t.name}</th>`).join('') + '<th>合计</th></tr>';
+  let body = all.map(s=>{
+    const cells = s.cells.map(c=>{
+      if(!c.n) return '<td><span class="z">·</span></td>';
+      const a = 0.14 + (c.n/maxN)*0.72;
+      return `<td><span class="cell" style="background:${c.color}${Math.round(a*255).toString(16).padStart(2,'0')};color:${a>0.55?'#fff':'#1C1A17'}">${c.n}</span></td>`;
+    }).join('');
+    return `<tr><td>${esc(s.source)}</td>${cells}<td class="tot">${s.total}</td></tr>`;
+  }).join('');
+  document.getElementById('matrix').innerHTML = `<thead>${head}</thead><tbody>${body}</tbody>`;
+})();
+
+/* --- 明细 --- */
+(function(){
+  const list = [...ITEMS].sort((a,b)=>{
+    const ia=TAGS.findIndex(t=>t.id===a.tag), ib=TAGS.findIndex(t=>t.id===b.tag);
+    return ia-ib || String(b.publishedAt||'').localeCompare(String(a.publishedAt||''));
+  });
+  document.getElementById('samples').innerHTML = list.map(it=>{
+    const t = TAG_BY.get(it.tag) || TAG_BY.get('other');
+    const date = it.publishedAt ? String(it.publishedAt).slice(0,10) : '';
+    return `<div class="item">
+      <div class="top">
+        <span class="chip" style="color:${t.color};background:${t.color}1A">${t.name}</span>
+        <span class="src">${esc(it.source)}${date?' · '+date:''}</span>
+      </div>
+      <h5><a href="${esc(it.url)}" target="_blank" rel="noopener">${esc(it.title)}</a></h5>
+      <div class="why">${esc(it.tagReason || '')}</div>
+    </div>`;
+  }).join('');
+})();
+</script>
+</body>
+</html>

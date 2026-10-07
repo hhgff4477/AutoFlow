@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AutoFlow · 抓取 → AI分类 → 分析报告</title>
+<meta name="description" content="黄鑫浩的 AI 自动化工作流：抓取公开资讯 → AI 提炼要点并自动分类 → 统计内容结构 → 导出分析报告。">
+<style>
+  :root{
+    --bg:#f6f3ee; --panel:#fffdfa; --ink:#181613; --ink-soft:#6f6a62;
+    --line:#e2dbd0; --accent:#b03a2e; --accent-soft:#fbeeea;
+    --dark:#151310; --dark-ink:#f1ede4;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+    --sans:"PingFang SC","Microsoft YaHei","Hiragino Sans GB",system-ui,-apple-system,"Segoe UI",sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{
+    font-family:var(--sans);background:var(--bg);color:var(--ink);
+    line-height:1.65;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+
+  /* ---------- top ---------- */
+  header{border-bottom:1px solid var(--line);background:var(--panel);}
+  .top{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:18px 0;flex-wrap:wrap;}
+  .brand{display:flex;align-items:baseline;gap:12px;}
+  .brand h1{font-size:19px;font-weight:800;letter-spacing:.02em;}
+  .brand .mono{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--accent);font-weight:600;}
+  .top .who{font-size:12.5px;color:var(--ink-soft);}
+  .top .who a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(176,58,46,.35);}
+  .top .who a:hover{border-bottom-color:var(--accent);}
+
+  /* ---------- hero ---------- */
+  .hero{padding:44px 0 30px;border-bottom:1px solid var(--line);}
+  .hero .eyebrow{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;color:var(--accent);font-weight:600;}
+  .hero h2{font-size:clamp(26px,3.6vw,40px);font-weight:800;line-height:1.25;margin:10px 0 12px;letter-spacing:-.01em;}
+  .hero h2 em{font-style:normal;color:var(--accent);}
+  .hero p{font-size:15px;color:var(--ink-soft);max-width:760px;}
+  .hero p+p{margin-top:8px;}
+  .hero p.note{
+    font-family:var(--mono);font-size:12px;letter-spacing:.02em;color:var(--ink-soft);
+    border-left:2px solid var(--accent);padding-left:12px;margin-top:14px;
+  }
+
+  /* ---------- pipeline ---------- */
+  .pipe{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:26px 0 8px;}
+  @media(max-width:1000px){.pipe{grid-template-columns:repeat(2,1fr);}}
+  @media(max-width:560px){.pipe{grid-template-columns:1fr;}}
+  .step{
+    background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px 20px;
+    position:relative;transition:border-color .2s, box-shadow .2s, transform .2s;
+  }
+  .step.active{border-color:var(--accent);box-shadow:0 8px 26px rgba(176,58,46,.10);}
+  .step.done{border-color:#bcd0bd;}
+  .step .no{font-family:var(--mono);font-size:11px;letter-spacing:.16em;color:var(--ink-soft);font-weight:600;}
+  .step h3{font-size:15.5px;font-weight:800;margin:6px 0 4px;}
+  .step p{font-size:13px;color:var(--ink-soft);}
+  .step .badge{
+    position:absolute;top:16px;right:18px;font-family:var(--mono);font-size:10.5px;
+    letter-spacing:.1em;color:var(--ink-soft);
+  }
+  .step.active .badge{color:var(--accent);font-weight:700;}
+  .step.done .badge{color:#4b7a4e;font-weight:700;}
+
+  /* ---------- controls ---------- */
+  .controls{
+    background:var(--panel);border:1px solid var(--line);border-radius:8px;
+    padding:22px 24px;margin:22px 0;
+  }
+  .ctl-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:14px;}
+  .ctl-head h3{font-size:15px;font-weight:800;}
+  .ctl-head .hint{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);letter-spacing:.06em;}
+  .srcs{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;margin-bottom:16px;}
+  .src{
+    display:flex;align-items:flex-start;gap:10px;border:1px solid var(--line);border-radius:6px;
+    padding:11px 13px;cursor:pointer;background:#fff;transition:border-color .18s,background .18s;
+  }
+  .src:hover{border-color:#c9bfae;}
+  .src input{margin-top:4px;accent-color:var(--accent);}
+  .src .nm{font-size:13.5px;font-weight:700;}
+  .src .ct{font-family:var(--mono);font-size:10.5px;color:var(--ink-soft);letter-spacing:.08em;}
+  .run-row{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
+  button{font-family:inherit;cursor:pointer;}
+  .btn{
+    border:1px solid var(--accent);background:var(--accent);color:#fff;
+    font-size:14px;font-weight:700;padding:11px 24px;border-radius:5px;
+    transition:opacity .18s,transform .1s;
+  }
+  .btn:hover{opacity:.9;}
+  .btn:active{transform:translateY(1px);}
+  .btn[disabled]{opacity:.5;cursor:not-allowed;}
+  .btn-ghost{background:transparent;color:var(--ink);border-color:var(--line);}
+  .btn-ghost:hover{border-color:var(--accent);color:var(--accent);}
+  .log{font-size:13px;color:var(--ink-soft);font-family:var(--mono);}
+  .log.err{color:var(--accent);}
+  .log.ok{color:#4b7a4e;}
+  .limit-pick{
+    display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-soft);
+    font-family:var(--mono);letter-spacing:.04em;
+  }
+  .limit-pick select{
+    font-family:var(--sans);font-size:13px;color:var(--ink);background:#fff;
+    border:1px solid var(--line);border-radius:5px;padding:8px 10px;cursor:pointer;
+  }
+  .limit-pick select:hover{border-color:#c9bfae;}
+
+  /* ---------- results ---------- */
+  .sec-head{display:flex;justify-content:space-between;align-items:baseline;gap:16px;flex-wrap:wrap;margin:30px 0 14px;}
+  .sec-head h3{font-size:18px;font-weight:800;}
+  .sec-head .meta{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);letter-spacing:.06em;}
+
+  .actions{
+    background:var(--accent-soft);border:1px solid rgba(176,58,46,.22);border-radius:8px;
+    padding:18px 22px;margin-bottom:22px;
+  }
+  .actions h4{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--accent);font-weight:700;margin-bottom:10px;}
+  .actions ol{padding-left:20px;font-size:14.5px;}
+  .actions li{margin-bottom:6px;}
+
+  .feed{display:flex;flex-direction:column;gap:12px;}
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px 20px;
+    border-left:3px solid var(--accent);transition:box-shadow .2s;
+  }
+  .card:hover{box-shadow:0 6px 20px rgba(24,22,19,.06);}
+  .card .meta{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-bottom:7px;}
+  .card .tag{
+    font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--accent);
+    border:1px solid rgba(176,58,46,.3);border-radius:99px;padding:1px 9px;
+  }
+  .card .src-name{font-family:var(--mono);font-size:11px;color:var(--ink-soft);letter-spacing:.06em;}
+  .card .time{font-family:var(--mono);font-size:11px;color:var(--ink-soft);margin-left:auto;}
+  .card h4{font-size:15.5px;font-weight:800;line-height:1.45;}
+  .card h4 a{color:inherit;text-decoration:none;border-bottom:1px solid transparent;}
+  .card h4 a:hover{border-bottom-color:var(--accent);color:var(--accent);}
+  .card .summary{font-size:14px;color:var(--ink-soft);margin-top:8px;white-space:pre-wrap;}
+  .card .excerpt{font-size:12.5px;color:#9a938a;margin-top:8px;font-style:italic;}
+  .skel{height:14px;background:linear-gradient(90deg,#eee8df,#f7f3ed,#eee8df);background-size:200% 100%;animation:sh 1.2s infinite;border-radius:4px;}
+  @keyframes sh{0%{background-position:200% 0;}100%{background-position:-200% 0;}}
+  .empty{font-size:14px;color:var(--ink-soft);font-style:italic;padding:12px 0;}
+
+  /* ---------- analysis ---------- */
+  .analysis{
+    background:var(--panel);border:1px solid var(--line);border-radius:8px;
+    padding:24px 26px;margin-bottom:22px;
+  }
+  .analysis h4{
+    font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;color:var(--accent);
+    font-weight:700;margin-bottom:14px;
+  }
+  .concl{font-size:14.5px;line-height:1.75;margin-bottom:18px;}
+  .concl b{color:var(--accent);}
+  .dist{display:flex;flex-direction:column;gap:9px;}
+  .dist-row{display:grid;grid-template-columns:78px 1fr 88px;gap:12px;align-items:center;font-size:13px;}
+  .dist-row .nm{font-weight:700;white-space:nowrap;}
+  .dist-row .bar{height:9px;background:#eee8df;border-radius:99px;overflow:hidden;}
+  .dist-row .bar i{display:block;height:100%;border-radius:99px;}
+  .dist-row .vl{font-family:var(--mono);font-size:11.5px;color:var(--ink-soft);text-align:right;white-space:nowrap;}
+  .src-tbl{width:100%;border-collapse:collapse;font-size:13px;margin-top:6px;}
+  .src-tbl th{
+    text-align:left;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;
+    color:var(--ink-soft);font-weight:600;padding:6px 10px 6px 0;border-bottom:1px solid var(--line);
+  }
+  .src-tbl td{padding:7px 10px 7px 0;border-bottom:1px solid #f0ebe2;}
+  .src-tbl td.n{font-family:var(--mono);font-size:12px;text-align:right;white-space:nowrap;}
+  .tagchip{
+    display:inline-block;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;
+    border-radius:99px;padding:1px 9px;margin-left:8px;vertical-align:middle;
+  }
+  .tag-reason{font-size:12px;color:#9a938a;margin-top:5px;}
+  .empty-hint{font-size:13.5px;color:var(--ink-soft);font-style:italic;}
+  .cover-note{font-size:12.5px;color:var(--ink-soft);line-height:1.65;margin-bottom:12px;}
+  .cover-note b{color:var(--ink);}
+  .data-note{
+    margin-top:22px;padding-top:14px;border-top:1px dashed var(--line);
+    font-size:12.5px;color:var(--ink-soft);line-height:1.7;
+  }
+  .data-note b{color:var(--ink);}
+  .data-note a{color:var(--accent);font-weight:700;text-decoration:none;border-bottom:1px solid rgba(217,72,31,.35);}
+
+  footer{border-top:1px solid var(--line);margin-top:44px;padding:22px 0 40px;font-size:12.5px;color:var(--ink-soft);}
+  footer .mono{font-family:var(--mono);font-size:11.5px;letter-spacing:.06em;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap top">
+    <div class="brand">
+      <h1>AutoFlow</h1>
+      <span class="mono">抓取 → AI → 归档</span>
+    </div>
+    <div class="who">黄鑫浩的个人自动化工作流 · <a href="/">返回作品集</a></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section class="hero">
+    <div class="eyebrow">PERSONAL AUTOMATION · AI × OPS</div>
+    <h2>把「每天手动刷资讯」<br>变成<em>一条跑得通的流水线</em></h2>
+    <p>这是我从访谈里那个想法真正做出来的东西：<strong>信息抓取 → AI 处理 → 内容分类 → 结构分析</strong>。以前这件事要手工点开四五个网站、自己读、自己摘；现在点一次按钮，后端去抓公开信息源，AI 逐条提炼要点并打上分类标签，最后输出一份可下载的<strong>结构分析报告</strong>。</p>
+    <p>技术栈：Node.js 后端负责抓取（绕开浏览器跨域限制）→ 云服务大模型做摘要与分类 → 服务端做统计聚合 → 报告导出。全程零第三方密钥。</p>
+    <p class="note">AI 处理为逐条流式生成，云服务侧对并发有限流，因此这一步需要等待几十秒到几分钟；运行时会实时显示进度与已用时间。实测参考：6 条约需 4 分钟，选择更少的信息源与条数会更快。</p>
+  </section>
+
+  <div class="pipe">
+    <div class="step" id="step1">
+      <span class="badge" id="badge1">待运行</span>
+      <div class="no">STEP 01</div>
+      <h3>信息抓取</h3>
+      <p>后端并行抓取选定的公开 RSS / JSON 源，标准化标题、链接、时间与摘要。</p>
+    </div>
+    <div class="step" id="step2">
+      <span class="badge" id="badge2">待运行</span>
+      <div class="no">STEP 02</div>
+      <h3>AI 处理与分类</h3>
+      <p>大模型逐条生成中文摘要，并判定归入工具类 / 观点类 / 融资 / 技术研究等类别。</p>
+    </div>
+    <div class="step" id="step3">
+      <span class="badge" id="badge3">待运行</span>
+      <div class="no">STEP 03</div>
+      <h3>结构统计</h3>
+      <p>服务端对标签做聚合统计，算出各类占比与来源分布，得出内容结构结论。</p>
+    </div>
+    <div class="step" id="step4">
+      <span class="badge" id="badge4">待运行</span>
+      <div class="no">STEP 04</div>
+      <h3>报告导出</h3>
+      <p>输出结构化分析报告 Markdown，含占比表、来源表与分条明细，一键下载。</p>
+    </div>
+  </div>
+
+  <section class="controls">
+    <div class="ctl-head">
+      <h3>① 选择信息源</h3>
+      <span class="hint" id="srcHint">加载中…</span>
+    </div>
+    <div class="srcs" id="srcs"></div>
+
+    <div class="ctl-head" style="margin-bottom:10px;">
+      <h3>② 运行流水线</h3>
+      <span class="hint" id="modelHint">模型：—</span>
+    </div>
+    <div class="run-row">
+      <label class="limit-pick">
+        处理条数
+        <select id="limitSel">
+          <option value="8" selected>8 条</option>
+          <option value="12">12 条</option>
+          <option value="24">24 条</option>
+        </select>
+      </label>
+      <button class="btn" id="runBtn" type="button">开始运行</button>
+      <button class="btn btn-ghost" id="reportBtn" type="button" disabled>下载分析报告 (.md)</button>
+      <button class="btn btn-ghost" id="archiveBtn" type="button" disabled>下载简报 (.md)</button>
+      <span class="log" id="log"></span>
+    </div>
+  </section>
+
+  <div class="sec-head">
+    <h3>内容结构分析</h3>
+    <span class="meta" id="analysisMeta">尚未运行</span>
+  </div>
+
+  <div class="analysis" id="analysisBox">
+    <h4>STRUCTURE — 结构结论</h4>
+    <div class="concl" id="conclusion">
+      <span class="empty-hint">运行流水线后，这里会显示基于本次样本算出的内容结构结论。</span>
+    </div>
+    <div class="dist" id="distBox"></div>
+    <div id="coverBox" hidden style="margin-top:22px;">
+      <h4 style="margin-bottom:4px;">COVERAGE — 跨源覆盖度</h4>
+      <p class="cover-note">报道过该类内容的源数 ÷ 总源数。<b>被越多独立来源同时报道，说明行业越在追这个话题</b>——这是在拿不到阅读/转发数据时，最接近“热度”的可算指标。</p>
+      <div class="dist" id="coverDist"></div>
+    </div>
+    <div id="srcBox" hidden style="margin-top:22px;">
+      <h4 style="margin-bottom:6px;">SOURCES — 来源分布</h4>
+      <table class="src-tbl">
+        <thead><tr><th>来源</th><th style="text-align:right;">条数</th><th>主要类别</th></tr></thead>
+        <tbody id="srcBody"></tbody>
+      </table>
+    </div>
+    <p class="data-note">注：本页只统计结构与覆盖，<b>不输出“转发量/阅读量”</b>——公开 RSS 源不提供这类数据，编造会失去可信度。完整版分析见 <a href="/analysis/" target="_blank" rel="noopener">内容结构分析报告 →</a></p>
+  </div>
+
+  <div class="sec-head">
+    <h3>AI 处理结果</h3>
+    <span class="meta" id="resultMeta">尚未运行</span>
+  </div>
+
+  <div id="actionsBox" hidden>
+    <div class="actions">
+      <h4>值得行动的要点</h4>
+      <ol id="actionList"></ol>
+    </div>
+  </div>
+
+  <div class="feed" id="feed">
+    <div class="empty">点击上方「开始运行」，结果会显示在这里。</div>
+  </div>
+
+  <footer>
+    <div class="mono">AUTOFLOW — 抓取 · AI 处理 · 归档　|　由黄鑫浩搭建，用于作品集演示</div>
+    <div style="margin-top:6px;">抓取对象仅限公开信息源白名单；AI 处理由云服务大模型完成，不依赖任何第三方 API Key。</div>
+  </footer>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tencent-ai/workbuddy-cloud-sdk@dev/lib/index.global.js"></script>
+<script>
+/* 云服务 publicConfig —— 与作品集同一应用，发布域名同源 */
+const PUBLIC_CONFIG = {
+  endpoint: 'https://huangxinhao-portfolio.app.workbuddy.host',
+  oauthRelayBaseUrl: 'https://www.workbuddy.cn/v2/as/genie-baas/oauth',
+  publishableKey: 'wbpk_SEFzfAoWFz2qQkY9jv6RnY_7COV5Hoox6dwHuhBOC0LZc3t5YmRGciN',
+};
+
+let cloud = null;
+try {
+  cloud = WorkBuddyCloud.createWorkBuddyCloud({
+    endpoint: PUBLIC_CONFIG.endpoint,
+    oauthRelayBaseUrl: PUBLIC_CONFIG.oauthRelayBaseUrl,
+    publishableKey: PUBLIC_CONFIG.publishableKey,
+  });
+} catch (e) {
+  console.error('[autoflow] cloud init failed', e && e.message);
+}
+
+const SYSTEM_PROMPT =
+  '你是一名资深的 AI 与互联网行业分析师，服务于一位求职 AI 运营岗位的应届生。' +
+  '你的任务是把抓取到的资讯逐条转述为简洁准确的中文要点。' +
+  '严格要求：只依据原文信息，不要编造事实、数字或结论；' +
+  '若原文信息不足，就只概括已知内容。每条摘要不超过 80 字，语言精炼、面向实际工作参考。';
+
+/**
+ * 分类体系（与服务端 /api/tags 保持一致）。
+ * 服务端负责最终统计，这里只用于展示与给模型下指令。
+ */
+const TAGS = [
+  { id: 'tool', name: '工具类', color: '#185FA5' },
+  { id: 'opinion', name: '观点类', color: '#993C1D' },
+  { id: 'funding', name: '融资/商业', color: '#3B6D11' },
+  { id: 'research', name: '技术/研究', color: '#534AB7' },
+  { id: 'other', name: '其他', color: '#5F5E5A' },
+];
+const TAG_BY_ID = new Map(TAGS.map((t) => [t.id, t]));
+
+/** 分类指令：让模型只输出“标签ID|一句话理由”，便于稳定解析 */
+const TAG_GUIDE =
+  '你可选的内容类别如下：\n' +
+  '- tool 工具类：AI 工具、产品、开源项目的发布或更新，或协议/接口/能力的新变化，侧重“能拿来用的东西”\n' +
+  '- opinion 观点类：行业评论、趋势判断、从业者观点、方法论分享与经验复盘，侧重“怎么看/怎么做这件事”\n' +
+  '- funding 融资/商业：融资、并购、营收、定价、商业模式或厂商商业动作\n' +
+  '- research 技术/研究：论文、模型能力评测、训练/算法等技术成果与突破\n' +
+  '- other 其他：确实无法归入以上各类的资讯\n' +
+  '注意：宁可归入前四类中“最接近”的一个，也不要轻易用 other；' +
+  '只有当这条内容与前四类都明显无关（如纯时政、社会新闻）时才选 other。';
+
+const $ = (id) => document.getElementById(id);
+const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => (
+  { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
+));
+
+let state = { fetched: [], processed: [], actionItems: [], generatedAt: null, conclusionNote: '' };let modelId = null;
+
+function log(text, cls) {
+  const el = $('log');
+  el.textContent = text || '';
+  el.className = 'log' + (cls ? ' ' + cls : '');
+}
+function setStep(n, status) {
+  const box = $('step' + n), badge = $('badge' + n);
+  box.classList.remove('active', 'done');
+  if (status === 'active') { box.classList.add('active'); badge.textContent = '运行中'; }
+  else if (status === 'done') { box.classList.add('done'); badge.textContent = '完成'; }
+  else { badge.textContent = '待运行'; }
+}
+function fmtTime(iso) {
+  if (!iso) return '';
+  const d = new Date(iso);
+  if (isNaN(d.getTime())) return '';
+  const p = (n) => String(n).padStart(2, '0');
+  return `${d.getFullYear()}.${p(d.getMonth()+1)}.${p(d.getDate())} ${p(d.getHours())}:${p(d.getMinutes())}`;
+}
+
+/* ---------- 信息源 ---------- */
+async function loadSources() {
+  try {
+    const res = await fetch('/api/sources');
+    const data = await res.json();
+    const box = $('srcs');
+    box.innerHTML = data.sources.map((s, i) => `
+      <label class="src">
+        <input type="checkbox" value="${esc(s.id)}" ${i < 3 ? 'checked' : ''}>
+        <span><span class="nm">${esc(s.name)}</span><br><span class="ct">${esc(s.category)} · ${esc(s.type.toUpperCase())}</span></span>
+      </label>`).join('');
+    $('srcHint').textContent = `${data.sources.length} 个公开信息源可选`;
+  } catch (e) {
+    $('srcHint').textContent = '信息源加载失败';
+    log('信息源加载失败：' + (e.message || '未知错误'), 'err');
+  }
+}
+
+/* ---------- 模型 ---------- */
+/* ---------- 模型选择 ----------
+ * 优先选“快速档”模型：一次运行要处理 20+ 条，
+ * 用通用大模型会慢到几分钟，实测 flash 档快 8 倍左右。
+ */
+const FAST_MODEL_PRIORITY = ['glm-5.3-flash', 'glm-5.2-flash', 'hy3', 'glm-5.3']
+
+function pickModel(models) {
+  const usable = (models || []).filter((m) => m.disabled !== true && m.id)
+  for (const want of FAST_MODEL_PRIORITY) {
+    const hit = usable.find((m) => m.id === want)
+    if (hit) return hit
+  }
+  return usable.find((m) => m.id !== 'auto') || usable[0] || null
+}
+
+async function loadModel() {
+  if (!cloud) { $('modelHint').textContent = '模型：云服务未连接'; return null; }
+  try {
+    const models = await cloud.llm.models.list()
+    if (!Array.isArray(models) || models.length === 0) {
+      $('modelHint').textContent = '模型：当前无可用模型'
+      return null
+    }
+    const m = pickModel(models)
+    if (!m) { $('modelHint').textContent = '模型：当前无可用模型'; return null; }
+    modelId = m.id
+    $('modelHint').textContent = '模型：' + (m.name || m.id) + ' · 并发处理'
+    return m
+  } catch (e) {
+    $('modelHint').textContent = '模型：获取失败'
+    console.error('[autoflow] models.list failed', e && e.message)
+    return null
+  }
+}
+
+/* ---------- AI 单条摘要 ---------- */
+async function summarizeOne(item, idx, total) {
+  const prompt =
+    `请为下面这条资讯写一条中文要点摘要（≤80字），面向 AI 运营从业者，说明“这条消息讲了什么、为什么值得关注”。\n` +
+    `只输出摘要本身，不要任何前缀、标题或解释。\n\n` +
+    `标题：${item.title}\n` +
+    `来源：${item.source}\n` +
+    `原始摘要：${item.excerpt || '（无）'}`;
+
+  let out = '';
+  for await (const chunk of cloud.llm.chat.completions.create({
+    model: modelId,
+    messages: [
+      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'user', content: prompt },
+    ],
+    stream: true,
+  })) {
+    const d = chunk.choices && chunk.choices[0] && chunk.choices[0].delta;
+    if (d && d.content) out += d.content;
+  }
+  return out.trim();
+}
+
+/* ---------- AI 汇总行动要点 ---------- */
+async function extractActions(items) {
+  const list = items
+    .map((it, i) => `${i + 1}. ${it.title}（${it.source}）${it.summary ? ' — ' + it.summary : ''}`)
+    .join('\n');
+  const prompt =
+    `以下是今天的资讯摘要列表。请提炼 3-4 条“值得一个求职 AI 运营岗的应届生采取行动”的要点` +
+    `（例如：值得学习的工具/方法、值得关注的行业趋势、可以改进自己作品集的启发）。\n` +
+    `每条不超过 45 字，直接输出编号列表，不要标题、不要解释。\n\n${list}`;
+
+  let out = '';
+  for await (const chunk of cloud.llm.chat.completions.create({
+    model: modelId,
+    messages: [
+      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'user', content: prompt },
+    ],
+    stream: true,
+  })) {
+    const d = chunk.choices && chunk.choices[0] && chunk.choices[0].delta;
+    if (d && d.content) out += d.content;
+  }
+  return out.split('\n')
+    .map((l) => l.replace(/^\s*[\d]+[.、)]\s*/, '').trim())
+    .filter(Boolean)
+    .slice(0, 5);
+}
+
+/* ---------- AI 内容分类 ----------
+ * 让模型只吐 "标签ID|理由"，格式固定才好解析；
+ * 解析不出来的（或返回了不存在的标签）一律兜底为 other——
+ * 宁可归到“其他”，也不能让脏数据污染后面的统计。
+ */
+async function classifyOne(item) {
+  const prompt =
+    `请把下面这条资讯归入一个最合适的类别。\n` +
+    TAG_GUIDE +
+    `\n只输出一行，格式严格为：类别ID|归类理由（理由不超过 30 字）。` +
+    `不要输出任何其他内容、不要加标点前缀。\n\n` +
+    `标题：${item.title}\n` +
+    `来源：${item.source}\n` +
+    `摘要：${item.summary || item.excerpt || '（无）'}`;
+
+  let out = '';
+  for await (const chunk of cloud.llm.chat.completions.create({
+    model: modelId,
+    messages: [
+      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'user', content: prompt },
+    ],
+    stream: true,
+  })) {
+    const d = chunk.choices && chunk.choices[0] && chunk.choices[0].delta;
+    if (d && d.content) out += d.content;
+  }
+
+  const raw = out.trim().replace(/^[`"'\s]+|[`"'\s]+$/g, '');
+  const m = raw.match(/^([a-zA-Z]+)\s*[|｜:：]\s*(.*)$/);
+  let id = m ? m[1].toLowerCase() : '';
+  let reason = m ? m[2].trim() : '';
+  if (!TAG_BY_ID.has(id)) {
+    // 容错：模型可能返回中文类别名
+    const cn = raw.match(/(工具类|观点类|融资|技术|其他)/);
+    if (cn) {
+      const found = TAGS.find((t) => t.name.includes(cn[1]) || cn[1].includes(t.name.slice(0, 2)));
+      id = found ? found.id : 'other';
+    } else {
+      id = 'other';
+    }
+    reason = reason || raw.slice(0, 30);
+  }
+  return { tag: id, tagReason: reason.slice(0, 40) };
+}
+
+/* ---------- 结构统计（纯前端算，与服务端报告口径一致）---------- */
+function computeStats(items) {
+  const total = items.length;
+  const byTag = new Map(TAGS.map((t) => [t.id, 0]));
+  const bySource = new Map();
+
+  for (const it of items) {
+    const k = TAG_BY_ID.has(it.tag) ? it.tag : 'other';
+    byTag.set(k, (byTag.get(k) || 0) + 1);
+    const s = it.source || '未知来源';
+    if (!bySource.has(s)) bySource.set(s, { count: 0, tags: new Map() });
+    const rec = bySource.get(s);
+    rec.count++;
+    rec.tags.set(k, (rec.tags.get(k) || 0) + 1);
+  }
+
+  const ranked = TAGS
+    .map((t) => ({ tag: t, n: byTag.get(t.id) || 0 }))
+    .filter((x) => x.n > 0)
+    .sort((a, b) => b.n - a.n);
+
+  return { total, byTag, bySource, ranked };
+}
+
+/** 结论必须是从统计里推出来的判断，不能是套话 */
+function buildConclusion(stats) {
+  const { total, ranked } = stats;
+  if (!total || !ranked.length) return '';
+  const top = ranked[0];
+  const p = (n) => ((n / total) * 100).toFixed(0);
+
+  const parts = [];
+  parts.push(
+    `本次共分类 ${total} 条，<b>${top.tag.name}</b>最多，${top.n} 条（${p(top.n)}%）` +
+      (ranked[1] ? `，其次是 ${ranked[1].tag.name} ${ranked[1].n} 条（${p(ranked[1].n)}%）。` : '。')
+  );
+
+  // 跨源覆盖度：被越多独立来源同时报道，说明行业越在追这个话题。
+  // 这是在拿不到阅读/转发数据时，最接近“热度”的可算指标。
+  const srcTotal = stats.bySource.size;
+  if (srcTotal > 1) {
+    const cover = ranked.map(({ tag }) => {
+      const s = [...stats.bySource.values()].filter((v) => (v.tags.get(tag.id) || 0) > 0).length;
+      return { tag, srcs: s, cover: (s / srcTotal) * 100, n: ranked.find((r) => r.tag.id === tag.id).n };
+    });
+    const topCover = [...cover].sort((a, b) => b.cover - a.cover)[0];
+    const ratio = [...cover].sort((a, b) => (b.n / Math.max(b.srcs, 1)) - (a.n / Math.max(a.srcs, 1)))[0];
+    parts.push(
+      `跨源覆盖度最高的是 <b>${topCover.tag.name}</b>（${topCover.srcs}/${srcTotal} 个来源都在报道）——` +
+        `被越多独立来源同时追踪的话题，越可能是行业当前的关注焦点。`
+    );
+    if (ratio && ratio.srcs <= 1) {
+      parts.push(
+        `<b>${ratio.tag.name}</b> 的 ${ratio.n} 条内容只来自 1 个来源，说明它是某家媒体的偏好口味，` +
+          `不代表普遍需求——仅凭这类内容判断“大家都爱看”是不成立的。`
+      );
+    }
+  }
+
+  const tool = ranked.find((x) => x.tag.id === 'tool');
+  const op = ranked.find((x) => x.tag.id === 'opinion');
+  if (tool && op) {
+    if (tool.n > op.n) {
+      parts.push(
+        `工具类多于观点类（${tool.n} : ${op.n}），说明这批公开源更偏“发布新东西”，` +
+          `同质化风险较高——如果要做内容号，纯搬运工具消息很难建立差异，需要叠加自己的实测或观点。`
+      );
+    } else if (op.n > tool.n) {
+      parts.push(
+        `观点类多于工具类（${op.n} : ${tool.n}），说明这批源偏“评论与判断”，` +
+          `适合做趋势解读类内容，但对读者的实操价值较弱。`
+      );
+    } else {
+      parts.push(`工具类与观点类数量持平（各 ${tool.n} 条），两类内容供给均衡，可组合成“工具 + 解读”的内容结构。`);
+    }
+  }
+
+  const missing = TAGS.filter((t) => t.id !== 'other' && !(stats.byTag.get(t.id) > 0));
+  if (missing.length) {
+    parts.push(`本次样本未出现：${missing.map((t) => t.name).join(' / ')}——样本量有限时属正常，多跑几次可提高覆盖。`);
+  }
+  return parts.map((s) => `<p style="margin-bottom:8px;">${s}</p>`).join('');
+}
+
+/* ---------- 渲染 ---------- */
+function renderAnalysis() {
+  const stats = computeStats(state.processed);
+  if (!state.processed.length) {
+    state.conclusionNote = '';
+    $('conclusion').innerHTML = '<span class="empty-hint">运行流水线后，这里会显示基于本次样本算出的内容结构结论。</span>';
+    $('distBox').innerHTML = '';
+    $('coverDist').innerHTML = '';
+    $('coverBox').hidden = true;
+    $('srcBox').hidden = true;
+    $('analysisMeta').textContent = '尚未运行';
+    return;
+  }
+
+  $('conclusion').innerHTML =
+    buildConclusion(stats) || '<span class="empty-hint">本次样本没有可统计的内容。</span>';
+  // 结论的纯文本版：下载报告时塞进 reportNote，
+  // 所以取文字而不是 innerText（innerText 会把每段之间的换行也读进来）。
+  state.conclusionNote = ($('conclusion').textContent || '')
+    .replace(/\s+/g, ' ')
+    .trim()
+    .slice(0, 300);
+
+  const max = stats.ranked[0]?.n || 1;
+  $('distBox').innerHTML = stats.ranked.map(({ tag, n }) => `
+    <div class="dist-row">
+      <span class="nm">${esc(tag.name)}</span>
+      <span class="bar"><i style="width:${Math.max(4, (n / max) * 100)}%;background:${tag.color};"></i></span>
+      <span class="vl">${n} 条 · ${((n / stats.total) * 100).toFixed(0)}%</span>
+    </div>`).join('');
+
+  const srcRows = [...stats.bySource.entries()].sort((a, b) => b[1].count - a[1].count);
+  $('srcBody').innerHTML = srcRows.map(([name, s]) => {
+    const main = [...s.tags.entries()].sort((a, b) => b[1] - a[1])[0];
+    const mainName = TAG_BY_ID.get(main?.[0])?.name || '其他';
+    return `<tr><td>${esc(name)}</td><td class="n">${s.count}</td><td>${esc(mainName)}</td></tr>`;
+  }).join('');
+  $('srcBox').hidden = srcRows.length === 0;
+
+  /* 跨源覆盖度：报道过该类的源数 ÷ 总源数。
+   * 这是在拿不到阅读/转发数据时，判断“哪类内容被行业真正追着看”的可算代理指标。 */
+  const srcTotal = srcRows.length;
+  const coverRows = stats.ranked.map(({ tag, n }) => {
+    const srcsOfTag = srcRows.filter(([, s]) => (s.tags.get(tag.id) || 0) > 0).length;
+    const cover = srcTotal ? (srcsOfTag / srcTotal) * 100 : 0;
+    return { tag, n, srcs: srcsOfTag, cover };
+  }).sort((a, b) => b.cover - a.cover);
+  $('coverDist').innerHTML = coverRows.map(({ tag, srcs, cover }) => `
+    <div class="dist-row">
+      <span class="nm">${esc(tag.name)}</span>
+      <span class="bar"><i style="width:${Math.max(4, cover)}%;background:${tag.color};"></i></span>
+      <span class="vl">${srcs}/${srcTotal} 源 · ${cover.toFixed(0)}%</span>
+    </div>`).join('');
+  $('coverBox').hidden = coverRows.length === 0;
+
+  $('analysisMeta').textContent = `${stats.total} 条样本 · ${stats.ranked.length} 个类别 · ${srcRows.length} 个来源`;
+}
+function renderFeed() {
+  const feed = $('feed');
+  if (!state.processed.length) {
+    feed.innerHTML = '<div class="empty">点击上方「开始运行」，结果会显示在这里。</div>';
+    return;
+  }
+  feed.innerHTML = state.processed.map((it) => {
+    const tg = TAG_BY_ID.get(it.tag) || TAG_BY_ID.get('other');
+    const chip = it.tag
+      ? `<span class="tagchip" style="color:${tg.color};border:1px solid ${tg.color}55;">${esc(tg.name)}</span>`
+      : '';
+    return `
+    <article class="card">
+      <div class="meta">
+        <span class="tag">${esc(it.category || '资讯')}</span>
+        <span class="src-name">${esc(it.source || '')}</span>
+        <span class="time">${esc(fmtTime(it.publishedAt))}</span>
+      </div>
+      <h4><a href="${esc(it.url)}" target="_blank" rel="noopener">${esc(it.title)}</a>${chip}</h4>
+      <div class="summary">${esc(it.summary || '（未生成摘要）')}</div>
+      ${it.tagReason ? `<div class="tag-reason">归类理由：${esc(it.tagReason)}</div>` : ''}
+    </article>`;
+  }).join('');
+}
+
+function renderActions() {
+  const box = $('actionsBox'), list = $('actionList');
+  if (!state.actionItems.length) { box.hidden = true; return; }
+  box.hidden = false;
+  list.innerHTML = state.actionItems.map((a) => `<li>${esc(a)}</li>`).join('');
+}
+
+/* ---------- 主流程 ---------- */
+async function run() {
+  const ids = Array.from(document.querySelectorAll('#srcs input:checked')).map((i) => i.value);
+  if (!ids.length) { log('请至少选择一个信息源。', 'err'); return; }
+  if (!cloud) { log('云服务未连接，无法进行 AI 处理。请刷新重试。', 'err'); return; }
+  if (!modelId) { log('当前没有可用模型，无法进行 AI 处理。', 'err'); return; }
+
+  const runBtn = $('runBtn');
+  runBtn.disabled = true;
+  $('archiveBtn').disabled = true;
+  $('reportBtn').disabled = true;
+  $('resultMeta').textContent = '运行中…';
+
+  state = { fetched: [], processed: [], actionItems: [], generatedAt: null, conclusionNote: '' };
+  renderFeed(); renderActions(); renderAnalysis();
+  ['1','2','3','4'].forEach((n) => setStep(n, 'idle'));
+
+  try {
+    /* --- STEP 1 抓取 --- */
+    setStep(1, 'active');
+    const limit = Number($('limitSel').value) || 8;
+    log('STEP 1/4 · 正在抓取信息源…');
+    const res = await fetch('/api/fetch', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sourceIds: ids, limit }),
+    });
+    if (!res.ok) throw new Error('抓取接口返回 ' + res.status);
+    const data = await res.json();
+    state.fetched = data.items || [];
+    state.generatedAt = data.fetchedAt;
+
+    if (!state.fetched.length) throw new Error('没有抓到任何条目，请换一个信息源重试');
+    setStep(1, 'done');
+    log(`STEP 1/4 完成 · 抓到 ${data.totalRaw} 条，取最新 ${state.fetched.length} 条进入 AI 处理`);
+    $('resultMeta').textContent = `已抓取 ${state.fetched.length} 条，AI 处理中…`;
+
+    /* --- STEP 2 AI 处理 + 分类（并发）---
+     * 每条要做两个模型调用：先摘要，再分类。
+     * 逐条串行会被模型延迟拖死（实测约 18 秒/次调用）。
+     * 这里用受控并发：一次同时跑 CONCURRENCY 条，完成一条就补一条。
+     */
+    setStep(2, 'active')
+    const total = state.fetched.length
+    const CONCURRENCY = 3
+    let cursor = 0
+    let finished = 0
+    const done = new Array(total)
+    const t0 = Date.now()
+
+    log(`STEP 2/4 · AI 处理中 0/${total}（并发 ${CONCURRENCY}）…`)
+    const worker = async () => {
+      while (cursor < total) {
+        const i = cursor++
+        const it = state.fetched[i]
+        let summary = ''
+        let tag = 'other'
+        let tagReason = ''
+        try {
+          summary = await summarizeOne(it, i, total)
+        } catch (e) {
+          console.error('[autoflow] summarize failed', e && e.code)
+        }
+        // 分类拿摘要一起判断，比只看标题准
+        try {
+          const c = await classifyOne({ ...it, summary })
+          tag = c.tag
+          tagReason = c.tagReason
+        } catch (e) {
+          console.error('[autoflow] classify failed', e && e.code)
+        }
+        done[i] = { ...it, summary, tag, tagReason }
+        finished++
+        state.processed = done.filter(Boolean)
+        renderFeed()
+        const secs = ((Date.now() - t0) / 1000).toFixed(0)
+        $('resultMeta').textContent = `${finished}/${total} 条已处理 · ${secs}s`
+        log(`STEP 2/4 · AI 处理中 ${finished}/${total} · 已用 ${secs}s`)
+      }
+    }
+    await Promise.all(Array.from({ length: Math.min(CONCURRENCY, total) }, worker))
+    state.processed = done.filter(Boolean)
+    renderFeed()
+    setStep(2, 'done')
+
+    /* --- STEP 3 结构统计（服务端不参与，纯统计聚合）--- */
+    setStep(3, 'active')
+    log('STEP 3/4 · 正在统计内容结构…')
+    renderAnalysis()
+    const stats = computeStats(state.processed)
+    log(`STEP 3/4 完成 · ${stats.total} 条归入 ${stats.ranked.length} 个类别`)
+    setStep(3, 'done')
+
+    /* 行动要点：这是额外一次模型调用，算在 STEP 2 的 AI 处理里，
+     * 不再挂在 STEP 3 上——否则用户会以为“统计”这一步很慢。 */
+    log('STEP 2/4 · 正在提炼行动要点（额外一次 AI 调用）…');
+    try {
+      state.actionItems = await extractActions(state.processed);
+    } catch (e) {
+      state.actionItems = [];
+      console.error('[autoflow] actions failed', e && e.code);
+    }
+    renderActions();
+
+    /* --- STEP 4 报告导出 --- */
+    setStep(4, 'active');
+    log('STEP 4/4 · 报告已就绪，可下载分析报告与简报');
+    $('archiveBtn').disabled = false;
+    $('reportBtn').disabled = false;
+    setStep(4, 'done');
+
+    const ok = state.processed.filter((p) => p.summary).length;
+    const tagged = state.processed.filter((p) => p.tag && p.tag !== 'other').length;
+    $('resultMeta').textContent = `${state.processed.length} 条 · ${ok} 条有摘要 · ${tagged} 条已分类 · ${fmtTime(state.generatedAt)}`;
+    log(`全部完成 · ${state.processed.length} 条已处理，${ok} 条有摘要，${tagged} 条已分类`, 'ok');
+  } catch (e) {
+    log('运行失败：' + (e.message || '未知错误'), 'err');
+    $('resultMeta').textContent = '运行失败';
+  } finally {
+    runBtn.disabled = false;
+  }
+}
+
+/* ---------- 分析报告下载 ---------- */
+async function downloadReport() {
+  if (!state.processed.length) return;
+  // 结论只取“自己推出来的那一句判断”，不把整块 innerText 塞进去——
+  // 否则报告里会先出现统计句、再出现结论句，同一件事说两遍。
+  const note = state.conclusionNote || '';
+
+  const res = await fetch('/api/report', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      items: state.processed,
+      generatedAt: state.generatedAt,
+      reportNote: note,
+    }),
+  });
+  if (!res.ok) { log('报告生成失败：' + res.status, 'err'); return; }
+  const text = await res.text();
+  const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const stamp = (state.generatedAt || '').slice(0, 10) || 'export';
+  a.href = url;
+  a.download = `ai-analysis-${stamp}.md`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  log('分析报告已下载 (.md)', 'ok');
+}
+
+/* ---------- 归档下载 ---------- */
+async function downloadArchive() {
+  if (!state.processed.length) return;
+  const res = await fetch('/api/archive', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      items: state.processed,
+      actionItems: state.actionItems,
+      generatedAt: state.generatedAt,
+    }),
+  });
+  if (!res.ok) { log('归档生成失败：' + res.status, 'err'); return; }
+  const text = await res.text();
+  const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const stamp = (state.generatedAt || '').slice(0, 10) || 'export';
+  a.href = url;
+  a.download = `ai-brief-${stamp}.md`;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+  log('归档已下载 (.md)', 'ok');
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  $('runBtn').addEventListener('click', run);
+  $('archiveBtn').addEventListener('click', downloadArchive);
+  $('reportBtn').addEventListener('click', downloadReport);
+  await loadSources();
+  await loadModel();
+});
+</script>
+</body>
+</html>
